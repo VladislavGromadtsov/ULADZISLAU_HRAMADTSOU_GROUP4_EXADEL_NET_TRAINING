@@ -6,9 +6,7 @@ namespace Task1 // Note: actual namespace depends on the project name.
     {
         static void Main(string[] args)
         {
-            var a = 4;
-
-            for (; a < 10; a++)
+            for (var a = 4; a < 10; a++)
             {
                 Console.WriteLine(a);
             }
