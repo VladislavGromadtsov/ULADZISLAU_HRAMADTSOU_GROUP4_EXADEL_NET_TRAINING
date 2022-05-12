@@ -24,9 +24,14 @@ namespace Task2
             sentence3 = ReadInputFile(InputPath3);
             Console.WriteLine("File 3 Input: \"" + sentence3 + "\"");
 
+            CheckInput(sentence1);
+            CheckInput(sentence2);
+            CheckInput(sentence3);
+
             sentence1 = GetReverse(sentence1);
             sentence2 = GetReverse(sentence2);
             sentence3 = GetReverse(sentence3);
+
 
             WriteToResultFile(OutputPath, sentence1, sentence2, sentence3);
 
@@ -113,6 +118,29 @@ namespace Task2
             }
 
             return result.ToString();
+        }
+
+        private static void CheckInput(string sentence)
+        {
+            string symbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=',.:0123456789 ";
+            if (string.IsNullOrEmpty(sentence))
+            {
+                throw new ArgumentNullException(nameof(sentence));
+            }
+
+            if (sentence.Length > 300)
+            {
+                throw new ArgumentOutOfRangeException(nameof(sentence), "String length less than or equal to 300 characters");
+            }
+
+            for (int i = 0; i < sentence.Length; i++)
+            {
+                if (symbols.IndexOf(sentence[i]) == -1)
+                {
+                    throw new ArgumentException("String should consist of lowercase and uppercase English letters, digits, or one of the " +
+                        "following characters \"!@#$%^&*()_+-=',.:\" or space \' \'");
+                }
+            }
         }
     }
 }
