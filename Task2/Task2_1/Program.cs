@@ -30,11 +30,11 @@ namespace Task2
             Console.Write("Output: ");
             if (aResult > bResult)
             {
-                Console.WriteLine($"Number \'a\' = {aResult:F2} and more than number \'b\' = {bResult:F2}");
+                Console.WriteLine($"\"Number \'a\' = {aResult:F2} and more than number \'b\' = {bResult:F2}\"");
             }
             else
             {
-                Console.WriteLine($"Number \'a\' = {aResult:F2} and less than number \'b\' = {bResult:F2}");
+                Console.WriteLine($"\"Number \'a\' = {aResult:F2} and less than number \'b\' = {bResult:F2}\"");
             }
         }
 
