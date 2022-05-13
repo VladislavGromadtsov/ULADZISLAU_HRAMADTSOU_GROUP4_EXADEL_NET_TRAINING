@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace Task2
@@ -7,11 +8,11 @@ namespace Task2
     {
         public static void Main(string[] args)
         {
-            string InputPath1 = @"..\..\..\InputFiles\InputFile1.txt";
-            string InputPath2 = @"..\..\..\InputFiles\InputFile2.txt";
-            string InputPath3 = @"..\..\..\InputFiles\InputFile3.txt";
+            string InputPath1 = AppDomain.CurrentDomain.BaseDirectory + "InputFiles\\InputFile1.txt";
+            string InputPath2 = AppDomain.CurrentDomain.BaseDirectory + "InputFiles\\InputFile2.txt";
+            string InputPath3 = AppDomain.CurrentDomain.BaseDirectory + "InputFiles\\InputFile3.txt";
 
-            string OutputPath = @"..\..\..\OutputFiles\ResultFile.txt";
+            string OutputPath = AppDomain.CurrentDomain.BaseDirectory + "OutputFiles\\ResultFile.txt";
 
             string sentence1, sentence2, sentence3;
 
@@ -88,7 +89,7 @@ namespace Task2
         {
             using (StreamReader reader = new StreamReader(inputPath))
             {
-                var sentence = reader.ReadLine();
+                var sentence = reader.ReadToEnd();
 
                 return sentence is null ? "" : sentence;
             }
@@ -122,7 +123,7 @@ namespace Task2
 
         private static void CheckInput(string sentence)
         {
-            string symbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=',.:0123456789 ";
+            string symbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=',.:0123456789 \r\n";
             if (string.IsNullOrEmpty(sentence))
             {
                 throw new ArgumentNullException(nameof(sentence));

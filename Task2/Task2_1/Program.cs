@@ -9,17 +9,15 @@ namespace Task2
             int a, b;
 
             Console.Write("Input a: ");
-            if (!InputValue(out a, 0, 5))
+            while (!InputValue(out a, 0, 5))
             {
-                Console.Write("Input a: ");
-                InputValue(out a, 0, 5);
+                Console.Write("\nInput a: ");
             }
 
             Console.Write("Input b: ");
-            if (!InputValue(out b, 0, 100))
+            while (!InputValue(out b, 0, 100))
             {
-                Console.Write("Input b: ");
-                InputValue(out b, 0, 100);
+                Console.Write("\nInput b: ");
             }
 
             double aResult, bResult;
@@ -31,6 +29,10 @@ namespace Task2
             if (aResult > bResult)
             {
                 Console.WriteLine($"\"Number \'a\' = {aResult:F2} and more than number \'b\' = {bResult:F2}\"");
+            }
+            else if (aResult == bResult)
+            {
+                Console.WriteLine($"\"Number \'a\' = {aResult:F2} and equals to number \'b\' = {bResult:F2}\"");
             }
             else
             {
@@ -58,17 +60,9 @@ namespace Task2
 
         public static bool InputValue(out int value, int startRange, int endRange)
         {
-            if (!int.TryParse(Console.ReadLine(), out value))
+            if (!int.TryParse(Console.ReadLine(), out value) || value < startRange || value > endRange)
             {
                 Console.WriteLine($"Value should be a number between {startRange} and {endRange}");
-                Console.ReadKey();
-                return false;
-            }
-
-            if (value < startRange || value > endRange)
-            {
-                Console.WriteLine($"Value should be a number between {startRange} and {endRange}");
-                Console.ReadKey();
                 return false;
             }
 
