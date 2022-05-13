@@ -8,11 +8,11 @@ namespace Task2
     {
         public static void Main(string[] args)
         {
-            string InputPath1 = AppDomain.CurrentDomain.BaseDirectory + "InputFiles\\InputFile1.txt";
-            string InputPath2 = AppDomain.CurrentDomain.BaseDirectory + "InputFiles\\InputFile2.txt";
-            string InputPath3 = AppDomain.CurrentDomain.BaseDirectory + "InputFiles\\InputFile3.txt";
+            string InputPath1 = $"{AppDomain.CurrentDomain.BaseDirectory}InputFiles\\InputFile1.txt";
+            string InputPath2 = $"{AppDomain.CurrentDomain.BaseDirectory}InputFiles\\InputFile2.txt";
+            string InputPath3 = $"{AppDomain.CurrentDomain.BaseDirectory}InputFiles\\InputFile3.txt";
 
-            string OutputPath = AppDomain.CurrentDomain.BaseDirectory + "OutputFiles\\ResultFile.txt";
+            string OutputPath = $"{AppDomain.CurrentDomain.BaseDirectory}OutputFiles\\ResultFile.txt";
 
             string sentence1, sentence2, sentence3;
 

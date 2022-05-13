@@ -7,17 +7,22 @@ namespace Task2
         public static void Main(string[] args)
         {
             int a, b;
+            bool flagA,flagB;
 
             Console.Write("Input a: ");
-            while (!InputValue(out a, 0, 5))
+            (flagA, a) = InputValue(0, 5);
+            while (!flagA)
             {
                 Console.Write("\nInput a: ");
+                (flagA, a) = InputValue(0, 5);
             }
 
             Console.Write("Input b: ");
-            while (!InputValue(out b, 0, 100))
+            (flagB, b) = InputValue(0, 100);
+            while (!flagB)
             {
                 Console.Write("\nInput b: ");
+                (flagB, b) = InputValue(0, 100);
             }
 
             double aResult, bResult;
@@ -58,15 +63,17 @@ namespace Task2
             return res;
         }
 
-        public static bool InputValue(out int value, int startRange, int endRange)
+        public static (bool, int) InputValue(int startRange, int endRange)
         {
+            int value;
+
             if (!int.TryParse(Console.ReadLine(), out value) || value < startRange || value > endRange)
             {
                 Console.WriteLine($"Value should be a number between {startRange} and {endRange}");
-                return false;
+                return (false, 0);
             }
 
-            return true;
+            return (true, value);
         }
     }
 }
