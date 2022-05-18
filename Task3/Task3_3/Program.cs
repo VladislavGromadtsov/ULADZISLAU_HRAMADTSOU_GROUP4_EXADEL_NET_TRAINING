@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Linq;
-using System.Text.Json;
+﻿using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Task3_3
@@ -10,33 +7,31 @@ namespace Task3_3
     {
         static void Main(string[] args)
         {
-            var inputFlag = true;
             var input = string.Empty;
             var brackets = string.Empty;
 
-            while (inputFlag)
+            while (true)
             {
                 Console.Write("Input:");
                 input = Console.ReadLine();
                 if (!string.IsNullOrEmpty(input))
                 {
-                    inputFlag = false;
+                    break;
                 }
             }
-            inputFlag = true;
 
-            while (inputFlag)
+            while (true)
             {
                 Console.Write("Brackets used:");
                 brackets = Console.ReadLine();
-                if (brackets is not null && brackets.Length % 2 == 0)
+                if (!string.IsNullOrEmpty(brackets) && CheckBrackets(brackets))
                 {
-                    inputFlag = false;
+                    break;
                 }
             }
 
             var str = new StringBuilder();
-            for (int i = 0; i < brackets.Length; i++)
+            for (int i = 0; i < brackets?.Length; i++)
             {
                 if (brackets[i] != ']')
                 {
@@ -59,26 +54,42 @@ namespace Task3_3
 
         private static bool CheckString(string str, string brackets)
         {
-            var counter = new int[brackets.Length];
-
-            for (int i = 0; i < str.Length; i++)
+            for (int i = 0; i < brackets.Length; i += 2)
             {
-                var index = brackets.IndexOf(str[i]);
-                if (index != -1)
-                {
-                    counter[index]++;
-                }
-            }
-
-            for (int i = 0; i < counter.Length / 2; i += 2)
-            {
-                if (counter[i] != counter[i+1])
+                var check = str.Where(v => v == brackets[i]).Count() == str.Where(v => v == brackets[i+1]).Count();
+                if (!check || str.IndexOf(brackets[i+1]) > str.IndexOf(brackets[i]))
                 {
                     return false;
                 }
             }
 
             return true;
+        }
+
+        private static bool CheckBrackets(string brackets)
+        {
+            var allBrackets = "(){}[]<>";
+            if (brackets.ToCharArray().All(c => allBrackets.IndexOf(c) != -1))
+            {
+                if (brackets.Length % 2 == 1)
+                {
+                    return false;
+                }
+
+                for (int i = 0; i < brackets.Length; i += 2)
+                {
+                    if (allBrackets.IndexOf(brackets[i+1]) - allBrackets.IndexOf(brackets[i]) != 1)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

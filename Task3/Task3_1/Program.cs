@@ -8,23 +8,38 @@ namespace Task3_1
     {
         static void Main(string[] args)
         {
-            List<string> lastnames = new List<string> { "Johnson", "Williams", "Brown", "Jones" };
-            Queue<string> inputQueue = new Queue<string>(lastnames);
-
             Dictionary<char, LinkedList<string>> dict = FillDictKeys();
+            string[] lastnames;
 
-            Console.Write("Input: ");
-            for (int i = 0; i < lastnames.Count; i++)
+            while (true)
             {
-                if (i != lastnames.Count - 1)
+                Console.Write("Input: ");
+                var input = Console.ReadLine();
+
+                if (!string.IsNullOrEmpty(input))
                 {
-                    Console.Write($"\"{lastnames[i]}\", ");
-                }
-                else
-                { 
-                    Console.Write($"\"{lastnames[i]}\"\n");
+                    lastnames = input.Trim().Split(", ");
+                    var flag = true;
+                    foreach (var lastname in lastnames)
+                    {
+                        if (!lastname.ToCharArray().All(char.IsLetter) || lastname.Length == 0)
+                        {
+                            flag = false;
+                        }
+                    }
+
+                    if (flag)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please enter name by name by using comma correctly");
+                    }
                 }
             }
+
+            Queue<string> inputQueue = new Queue<string>(lastnames);
 
             if (inputQueue.Count != 0)
             {
