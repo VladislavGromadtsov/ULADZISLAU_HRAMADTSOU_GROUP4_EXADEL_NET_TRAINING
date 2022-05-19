@@ -11,4 +11,5 @@
 
 GO
 
-CREATE INDEX [IX_Student_Column] ON [dbo].[Student] ([Column])
+CREATE NONCLUSTERED INDEX [NonClusteredIndex-20220519-181434]
+    ON [dbo].[Student]([LastName] ASC);
