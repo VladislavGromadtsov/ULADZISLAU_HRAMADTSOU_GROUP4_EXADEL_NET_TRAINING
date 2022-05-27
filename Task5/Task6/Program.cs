@@ -41,14 +41,19 @@ public static class Program
         ThreadHelper threadHelper1 = new ThreadHelper(path1);
         ThreadHelper threadHelper2 = new ThreadHelper(path2);
 
-        Thread thread1 = new Thread(new ThreadStart(threadHelper1.CalculateThread));
-        Thread thread2 = new Thread(new ThreadStart(threadHelper2.CalculateThread));
-        
-        thread1.Start();
-        thread2.Start();
+        using (var ct = new CancellationTokenSource())
+        {
+            Thread thread1 = new Thread(new ThreadStart(threadHelper1.CalculateThread));
+            Thread thread2 = new Thread(new ThreadStart(threadHelper2.CalculateThread));
 
-        thread1.Join();
-        thread2.Join();
+            thread1.Start();
+            thread2.Start();
+
+            thread1.Join();
+            thread2.Join();
+
+            ct.Cancel();
+        }
 
         stopwatch.Stop();
 
