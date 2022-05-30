@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Task6;
-public class ThreadHelper
+﻿namespace Task6;
+public class Task6Helper
 {
     private readonly string path;
     private string? line;
@@ -13,7 +7,7 @@ public class ThreadHelper
     private string? result;
 
 
-    public ThreadHelper(string path)
+    public Task6Helper(string path)
     {
         this.path = path;
     }

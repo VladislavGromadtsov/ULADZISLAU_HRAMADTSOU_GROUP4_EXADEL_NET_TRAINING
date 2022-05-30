@@ -22,10 +22,23 @@ public static class Program
             switch (Console.ReadLine())
             {
                 case "1":
-                    await SolveAsync(file1Path, file2Path);
+                    var watch1 = new Stopwatch();
+                    watch1.Start();
+
+                    var t = SolveAsync(file1Path, file2Path);
+                    t.Wait();
+
+                    watch1.Stop();
+                    Console.WriteLine($"Time: {watch1.Elapsed.TotalSeconds}\n");
                     break;
                 case "2":
+                    var watch2 = new Stopwatch();
+                    watch2.Start();
+
                     Solve(file1Path, file2Path);
+
+                    watch2.Stop();
+                    Console.WriteLine($"Time: {watch2.Elapsed.TotalSeconds}\n");
                     break;
                 case "0":
                     return;
@@ -35,16 +48,13 @@ public static class Program
 
     private static void Solve(string path1, string path2)
     {
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
-
-        ThreadHelper threadHelper1 = new ThreadHelper(path1);
-        ThreadHelper threadHelper2 = new ThreadHelper(path2);
+        Task6Helper helper1 = new Task6Helper(path1);
+        Task6Helper helper2 = new Task6Helper(path2);
 
         using (var ct = new CancellationTokenSource())
         {
-            Thread thread1 = new Thread(new ThreadStart(threadHelper1.CalculateThread));
-            Thread thread2 = new Thread(new ThreadStart(threadHelper2.CalculateThread));
+            Thread thread1 = new Thread(new ThreadStart(helper1.CalculateThread));
+            Thread thread2 = new Thread(new ThreadStart(helper2.CalculateThread));
 
             thread1.Start();
             thread2.Start();
@@ -55,20 +65,14 @@ public static class Program
             ct.Cancel();
         }
 
-        stopwatch.Stop();
-
         Console.WriteLine("Output:\n" +
             "Multi-thread method\n" +
-            $"Time: {stopwatch.Elapsed.TotalSeconds}\n" +
-            $"{threadHelper1.GetResult()}\n" +
-            $"{threadHelper2.GetResult()}");
+            $"{helper1.GetResult()}\n" +
+            $"{helper2.GetResult()}");
     }
     
     private static async Task SolveAsync(string path1, string path2)
     {
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
-
         string? str1, sign1, str2, sign2;
 
         (str1, sign1) = await ReadInputFileAsync(path1);
@@ -80,11 +84,8 @@ public static class Program
         Console.WriteLine($"{Path.GetFileName(path1)} Input:\n{str1}\n{sign1}");
         Console.WriteLine($"{Path.GetFileName(path2)} Input:\n{str2}\n{sign2}");
 
-        stopwatch.Stop();
-
         Console.WriteLine("Output:\n" +
             "Asynchronion method\n" +
-            $"Time: {stopwatch.Elapsed.TotalSeconds}\n" +
             $"Data from {Path.GetFileName(path1)}: {result1}\n" +
             $"Data from {Path.GetFileName(path2)}: {result2}");
     }
