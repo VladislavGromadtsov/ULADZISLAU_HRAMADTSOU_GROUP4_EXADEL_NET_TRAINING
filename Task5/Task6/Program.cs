@@ -18,18 +18,18 @@ public static class Program
                 "0. Exit");
 
             Console.WriteLine("Method: ");
-            var choice = Console.ReadLine();
-            if (choice == "1")
+            
+            switch (Console.ReadLine())
             {
-                await SolveAsync(file1Path, file2Path);
+                case "1":
+                    await SolveAsync(file1Path, file2Path);
+                    break;
+                case "2":
+                    Solve(file1Path, file2Path);
+                    break;
+                case "0":
+                    return;
             }
-
-            if (choice == "2")
-            {
-                Solve(file1Path, file2Path);
-            }
-
-            if (choice == "0") return;
         }
     }
 
