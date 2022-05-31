@@ -10,6 +10,6 @@ namespace Task5.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Class> Classes{ get; set; } = new List<Class>();
+        public virtual List<Class> Classes{ get; set; } = new List<Class>();
     }
 }

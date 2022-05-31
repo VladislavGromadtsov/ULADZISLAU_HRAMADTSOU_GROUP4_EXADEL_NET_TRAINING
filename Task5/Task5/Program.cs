@@ -16,8 +16,11 @@ public static class Program
 
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
         var options = optionsBuilder
+            .UseLazyLoadingProxies()
             .UseSqlServer(connectionString)
             .Options;
+
+        var taskHelper7 = new TaskHelper7(new ApplicationContext(options));
 
         while (true)
         {
@@ -30,6 +33,10 @@ public static class Program
                 "6. Update subject by ID Async\n" +
                 "7. Delete subject by ID Async\n" +
                 "8. Read subject by ID Async\n" +
+                "9. Create subject using Repository Pattern\n" +
+                "10. Update subject by ID using Repository Pattern\n" +
+                "11. Delete subject by ID using Repository Pattern\n" +
+                "12. Read subject by ID using Repository Pattern\n" +
                 "0. Exit\n\n" +
                 "Input: ");
             var choice = Console.ReadLine();
@@ -62,6 +69,22 @@ public static class Program
                         break;
                     case "8":
                         await ReadSubjectAsync(options);
+                        break;
+                    case "9":
+                        taskHelper7.CreateSubject();
+                        Console.ReadKey();
+                        break;
+                    case "10":
+                        taskHelper7.UpdateSubject();
+                        Console.ReadKey();
+                        break;
+                    case "11":
+                        taskHelper7.DeleteSubject();
+                        Console.ReadKey();
+                        break;
+                    case "12":
+                        taskHelper7.ReadSubject();
+                        Console.ReadKey();
                         break;
                     case "0":
                         return;
