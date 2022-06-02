@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Task5.Models;
 using Task5.StudentInfoService;
 
@@ -103,7 +105,7 @@ public static class Program
 
     public static void GetStudentInfo(DbContextOptions<ApplicationContext> options)
     {
-        var getStudentInfoService = new GetStudentsInfoService(new ApplicationContext(options));
+        GetStudentsInfoService getStudentInfoService;
 
         Console.Clear();
 
@@ -120,12 +122,12 @@ public static class Program
 
                 if (studentId != 0 && choice == "1")
                 {
-                    getStudentInfoService.SetFormat(new GetFullInfoService());
+                    getStudentInfoService = new GetStudentsInfoService(new ApplicationContext(options), new GetFullInfoService());
                     getStudentInfoService.GetInfoById(studentId);
                 }
                 else if (studentId != 0)
-                {
-                    getStudentInfoService.SetFormat(new GetLastNameService());
+                { 
+                    getStudentInfoService = new GetStudentsInfoService(new ApplicationContext(options), new GetLastNameService());
                     getStudentInfoService.GetInfoById(studentId);
                 }
                 break;
