@@ -18,12 +18,21 @@ public static class Program
         var connectionString = config.GetConnectionString("DefaultConnection");
 
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
-        var options = optionsBuilder
+        var appContextOptions = optionsBuilder
             .UseLazyLoadingProxies()
             .UseSqlServer(connectionString)
             .Options;
 
-        var taskHelper7 = new TaskHelper7(new ApplicationContext(options));
+        var taskHelper7 = new TaskHelper7(new ApplicationContext(appContextOptions));
+
+        var host = Host.CreateDefaultBuilder()
+            .ConfigureServices(services =>
+            {
+                services.AddDbContext<ApplicationContext>(options => 
+                    options.UseSqlServer(connectionString).UseLazyLoadingProxies());
+                services.AddTransient<GetStudentsInfoService>();
+            })
+            .Build();
 
         while (true)
         {
@@ -51,28 +60,28 @@ public static class Program
                 switch (choice)
                 {
                     case "1":
-                        CreateSubject(options);
+                        CreateSubject(appContextOptions);
                         break;
                     case "2":
-                        UpdateSubject(options);
+                        UpdateSubject(appContextOptions);
                         break;
                     case "3":
-                        DeleteSubject(options);
+                        DeleteSubject(appContextOptions);
                         break;
                     case "4":
-                        ReadSubject(options);
+                        ReadSubject(appContextOptions);
                         break;
                     case "5":
-                        await CreateSubjectAsync(options);
+                        await CreateSubjectAsync(appContextOptions);
                         break;
                     case "6":
-                        await UpdateSubjectAsync(options);
+                        await UpdateSubjectAsync(appContextOptions);
                         break;
                     case "7":
-                        await DeleteSubjectAsync(options);
+                        await DeleteSubjectAsync(appContextOptions);
                         break;
                     case "8":
-                        await ReadSubjectAsync(options);
+                        await ReadSubjectAsync(appContextOptions);
                         break;
                     case "9":
                         taskHelper7.CreateSubject();
@@ -91,7 +100,7 @@ public static class Program
                         Console.ReadKey();
                         break;
                     case "-s":
-                        GetStudentInfo(options);
+                        GetStudentInfo(appContextOptions, host);
                         Console.ReadKey();
                         break;
                     case "0":
@@ -103,10 +112,8 @@ public static class Program
         }
     }
 
-    public static void GetStudentInfo(DbContextOptions<ApplicationContext> options)
+    public static void GetStudentInfo(DbContextOptions<ApplicationContext> options, IHost host)
     {
-        GetStudentsInfoService getStudentInfoService;
-
         Console.Clear();
 
         while (true)
@@ -122,13 +129,13 @@ public static class Program
 
                 if (studentId != 0 && choice == "1")
                 {
-                    getStudentInfoService = new GetStudentsInfoService(new ApplicationContext(options), new GetFullInfoService());
-                    getStudentInfoService.GetInfoById(studentId);
+                    var studentFullInfo = ActivatorUtilities.CreateInstance<GetStudentsInfoService>(host.Services, new GetFullInfoService());
+                    studentFullInfo.GetInfoById(studentId);
                 }
                 else if (studentId != 0)
-                { 
-                    getStudentInfoService = new GetStudentsInfoService(new ApplicationContext(options), new GetLastNameService());
-                    getStudentInfoService.GetInfoById(studentId);
+                {
+                    var studentLastName = ActivatorUtilities.CreateInstance<GetStudentsInfoService>(host.Services, new GetLastNameService());
+                    studentLastName.GetInfoById(studentId);
                 }
                 break;
             }

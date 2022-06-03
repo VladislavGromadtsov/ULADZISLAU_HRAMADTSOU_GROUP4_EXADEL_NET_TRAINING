@@ -24,8 +24,8 @@
         public void GetInfoById(int id)
         {
             var result = string.Empty;
-            var student = _context.Students.FirstOrDefault(x => x.Id == id);  
-            
+            var student = _context.Students.FirstOrDefault(x => x.Id == id);
+
             if (student != null)
             {
                 result = this._infoStringFormatterService.GetInfo(student);
