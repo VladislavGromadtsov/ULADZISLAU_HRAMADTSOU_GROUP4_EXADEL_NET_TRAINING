@@ -12,14 +12,14 @@ namespace Task5.DataAccessLayer
             this._appContext = applicationContext;
         }
 
-        public void Create(T item)
+        public async Task CreateAsync(T item)
         {
-            _appContext.Add(item);
+            await _appContext.AddAsync(item);
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var item = _appContext.Find<T>(id);
+            var item = await _appContext.FindAsync<T>(id);
             if (item is not null)
             {
                 _appContext.Remove(item);
@@ -45,21 +45,21 @@ namespace Task5.DataAccessLayer
             GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return _appContext.Set<T>().ToList();
+            return await _appContext.Set<T>().ToListAsync();
         }
 
-        public T? GetItem(int id)
+        public async Task<T?> GetItemAsync(int id)
         {
-            var item = _appContext.Find<T>(id);
+            var item = await _appContext.FindAsync<T>(id);
 
             return item;
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _appContext.SaveChanges();
+            await _appContext.SaveChangesAsync();
         }
 
         public void Update(T item)

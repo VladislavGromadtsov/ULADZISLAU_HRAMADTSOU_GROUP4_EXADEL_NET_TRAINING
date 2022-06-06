@@ -84,19 +84,19 @@ public static class Program
                         await ReadSubjectAsync(appContextOptions);
                         break;
                     case "9":
-                        taskHelper7.CreateSubject();
+                        await taskHelper7.CreateSubject();
                         Console.ReadKey();
                         break;
                     case "10":
-                        taskHelper7.UpdateSubject();
+                        await taskHelper7.UpdateSubject();
                         Console.ReadKey();
                         break;
                     case "11":
-                        taskHelper7.DeleteSubject();
+                        await taskHelper7.DeleteSubject();
                         Console.ReadKey();
                         break;
                     case "12":
-                        taskHelper7.ReadSubject();
+                        await taskHelper7.ReadSubject();
                         Console.ReadKey();
                         break;
                     case "-s":
