@@ -11,7 +11,7 @@ namespace Task5.Models
         public int Id { get; set; }
         public byte Number { get; set; }
         public string Letter { get; set; }
-        public List<Student> Students { get; set; } = new List<Student>();
-        public List<Subject> Subjects { get; set; } = new List<Subject>();
+        public virtual List<Student> Students { get; set; } = new List<Student>();
+        public virtual List<Subject> Subjects { get; set; } = new List<Subject>();
     }
 }

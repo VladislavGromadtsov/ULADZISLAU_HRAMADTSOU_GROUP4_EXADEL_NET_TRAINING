@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Task5.Models;
+using Task5.StudentInfoService;
 
 namespace Task5;
 
@@ -16,8 +17,11 @@ public static class Program
 
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
         var options = optionsBuilder
+            .UseLazyLoadingProxies()
             .UseSqlServer(connectionString)
             .Options;
+
+        var taskHelper7 = new TaskHelper7(new ApplicationContext(options));
 
         while (true)
         {
@@ -30,6 +34,11 @@ public static class Program
                 "6. Update subject by ID Async\n" +
                 "7. Delete subject by ID Async\n" +
                 "8. Read subject by ID Async\n" +
+                "9. Create subject using Repository Pattern\n" +
+                "10. Update subject by ID using Repository Pattern\n" +
+                "11. Delete subject by ID using Repository Pattern\n" +
+                "12. Read subject by ID using Repository Pattern\n\n" +
+                "-s. Get Student Info\n\n" +
                 "0. Exit\n\n" +
                 "Input: ");
             var choice = Console.ReadLine();
@@ -63,12 +72,64 @@ public static class Program
                     case "8":
                         await ReadSubjectAsync(options);
                         break;
+                    case "9":
+                        await taskHelper7.CreateSubject();
+                        Console.ReadKey();
+                        break;
+                    case "10":
+                        await taskHelper7.UpdateSubject();
+                        Console.ReadKey();
+                        break;
+                    case "11":
+                        await taskHelper7.DeleteSubject();
+                        Console.ReadKey();
+                        break;
+                    case "12":
+                        await taskHelper7.ReadSubject();
+                        Console.ReadKey();
+                        break;
+                    case "-s":
+                        GetStudentInfo(options);
+                        Console.ReadKey();
+                        break;
                     case "0":
                         return;
                 }
             }
 
             Console.Clear();
+        }
+    }
+
+    public static void GetStudentInfo(DbContextOptions<ApplicationContext> options)
+    {
+        var getStudentInfoService = new GetStudentsInfoService(new ApplicationContext(options));
+
+        Console.Clear();
+
+        while (true)
+        {
+            Console.WriteLine("1. Press 1 to get full info about student by id\n" +
+                "2. Press 2 to get student's last name by id");
+
+            var choice = Console.ReadLine();
+            if (choice == "1" || choice == "2")
+            {
+                Console.Write("Enter the Id: ");
+                var studentId = Convert.ToInt32(Console.ReadLine());
+
+                if (studentId != 0 && choice == "1")
+                {
+                    getStudentInfoService.SetStrategy(new GetFullInfoService());
+                    getStudentInfoService.GetInfoById(studentId);
+                }
+                else if (studentId != 0)
+                {
+                    getStudentInfoService.SetStrategy(new GetLastNameService());
+                    getStudentInfoService.GetInfoById(studentId);
+                }
+                break;
+            }
         }
     }
 

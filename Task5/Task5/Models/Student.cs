@@ -16,6 +16,6 @@ namespace Task5.Models
         public string Address { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int ClassId { get; set; }
-        public Class Class { get; set; }
+        public virtual Class Class { get; set; }
     }
 }
