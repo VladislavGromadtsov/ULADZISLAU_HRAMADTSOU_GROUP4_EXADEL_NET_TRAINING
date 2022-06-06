@@ -23,16 +23,19 @@ public static class Program
             .UseSqlServer(connectionString)
             .Options;
 
-        var taskHelper7 = new TaskHelper7(new ApplicationContext(appContextOptions));
-
         var host = Host.CreateDefaultBuilder()
             .ConfigureServices(services =>
             {
-                services.AddDbContext<ApplicationContext>(options => 
+                services.AddDbContext<ApplicationContext>(options =>
                     options.UseSqlServer(connectionString).UseLazyLoadingProxies());
-                services.AddTransient<GetStudentsInfoService>();
+                services.AddSingleton<IInfoStringFormatterService, GetFullInfoService>();
+                services.AddSingleton<IInfoStringFormatterService, GetLastNameService>();
+                services.AddTransient<IGetStudentsInfoService, GetStudentsInfoService>();
+                services.AddTransient<ITaskHelper7, TaskHelper7>();
             })
             .Build();
+
+        var taskHelper7 = host.Services.GetService<ITaskHelper7>();
 
         while (true)
         {
@@ -116,27 +119,32 @@ public static class Program
     {
         Console.Clear();
 
+        var studentInfo = host.Services.GetService<IGetStudentsInfoService>();
+        var formats = studentInfo.GetAllFormats().ToArray();
+
         while (true)
         {
-            Console.WriteLine("1. Press 1 to get full info about student by id\n" +
-                "2. Press 2 to get student's last name by id");
+            for (int i = 0; i < formats.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. Press {i + 1} to get {formats[i].GetDiscription()} by ID");
+            }
 
-            var choice = Console.ReadLine();
-            if (choice == "1" || choice == "2")
+            var choice = Convert.ToInt32(Console.ReadLine());
+            if (choice >= 1 && choice <= formats.Length)
             {
                 Console.Write("Enter the Id: ");
                 var studentId = Convert.ToInt32(Console.ReadLine());
 
-                if (studentId != 0 && choice == "1")
+                if (studentId > 0)
                 {
-                    var studentFullInfo = ActivatorUtilities.CreateInstance<GetStudentsInfoService>(host.Services, new GetFullInfoService());
-                    studentFullInfo.GetInfoById(studentId);
+                    studentInfo.SetStrategy(formats[choice - 1]);
+                    studentInfo.GetInfoById(studentId);
                 }
-                else if (studentId != 0)
+                else
                 {
-                    var studentLastName = ActivatorUtilities.CreateInstance<GetStudentsInfoService>(host.Services, new GetLastNameService());
-                    studentLastName.GetInfoById(studentId);
+                    Console.WriteLine("ID should be more than 0");
                 }
+
                 break;
             }
         }

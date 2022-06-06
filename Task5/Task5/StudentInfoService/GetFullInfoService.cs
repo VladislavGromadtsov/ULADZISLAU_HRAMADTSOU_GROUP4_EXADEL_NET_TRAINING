@@ -3,8 +3,13 @@ using Task5.Models;
 
 namespace Task5.StudentInfoService
 {
-    public class GetFullInfoService : IInfoStringFormatterService
+    public class GetFullInfoService : IGetFullInfoService
     {
+        public string GetDiscription()
+        {
+            return "Full info about student";
+        }
+
         public string GetInfo(Student student)
         {
             var info = new StringBuilder();

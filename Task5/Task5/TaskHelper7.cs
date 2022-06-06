@@ -8,7 +8,7 @@ using Task5.Models;
 
 namespace Task5
 {
-    public class TaskHelper7
+    public class TaskHelper7 : ITaskHelper7
     {
         readonly IRepository<Class> classDb;
         readonly IRepository<Student> studentDb;
