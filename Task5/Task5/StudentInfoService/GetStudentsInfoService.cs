@@ -16,7 +16,7 @@
             this._context = applicationContex;
         }
 
-        public void SetFormat(IInfoStringFormatterService infoStringFormatterService)
+        public void SetStrategy(IInfoStringFormatterService infoStringFormatterService)
         {
             this._infoStringFormatterService = infoStringFormatterService;
         }

@@ -73,19 +73,19 @@ public static class Program
                         await ReadSubjectAsync(options);
                         break;
                     case "9":
-                        taskHelper7.CreateSubject();
+                        await taskHelper7.CreateSubject();
                         Console.ReadKey();
                         break;
                     case "10":
-                        taskHelper7.UpdateSubject();
+                        await taskHelper7.UpdateSubject();
                         Console.ReadKey();
                         break;
                     case "11":
-                        taskHelper7.DeleteSubject();
+                        await taskHelper7.DeleteSubject();
                         Console.ReadKey();
                         break;
                     case "12":
-                        taskHelper7.ReadSubject();
+                        await taskHelper7.ReadSubject();
                         Console.ReadKey();
                         break;
                     case "-s":
@@ -120,12 +120,12 @@ public static class Program
 
                 if (studentId != 0 && choice == "1")
                 {
-                    getStudentInfoService.SetFormat(new GetFullInfoService());
+                    getStudentInfoService.SetStrategy(new GetFullInfoService());
                     getStudentInfoService.GetInfoById(studentId);
                 }
                 else if (studentId != 0)
                 {
-                    getStudentInfoService.SetFormat(new GetLastNameService());
+                    getStudentInfoService.SetStrategy(new GetLastNameService());
                     getStudentInfoService.GetInfoById(studentId);
                 }
                 break;

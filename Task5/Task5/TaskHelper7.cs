@@ -21,7 +21,7 @@ namespace Task5
             studentDb = new SchoolRepository<Student>(applicationContext);
         }
 
-        public void CreateSubject()
+        public async Task CreateSubject()
         {
             Console.Write("Input subject name: ");
             var subjectName = Console.ReadLine();
@@ -29,8 +29,8 @@ namespace Task5
             {
                 Subject subject = new Subject { Name = subjectName };
 
-                subjectDb.Create(subject);
-                subjectDb.Save();
+                await subjectDb.CreateAsync(subject);
+                await subjectDb.SaveAsync();
 
                 Console.WriteLine($"Subject {subjectName} created!");
             }
@@ -40,12 +40,12 @@ namespace Task5
             }
         }
 
-        public void ReadSubject()
+        public async Task ReadSubject()
         {
             Console.Write("Input subject ID: ");
             var subjectID = Convert.ToInt32(Console.ReadLine());
 
-            var subject = subjectDb.GetItem(subjectID);
+            var subject = await subjectDb.GetItemAsync(subjectID);
             if (subject != null)
             {
                 Console.WriteLine($"ID:\t{subject.Id}\n" +
@@ -63,19 +63,19 @@ namespace Task5
             }
         }
 
-        public void DeleteSubject()
+        public async Task DeleteSubject()
         {
             Console.Write("Input subject ID: ");
             var subjectID = Convert.ToInt32(Console.ReadLine());
 
-            var subject = subjectDb.GetItem(subjectID);
+            var subject = await subjectDb.GetItemAsync(subjectID);
             if (subject != null)
             {
                 Console.WriteLine($"ID:\t{subject.Id}\n" +
                     $"Name:\t{subject.Name}");
 
-                subjectDb.Delete(subjectID);
-                subjectDb.Save();
+                await subjectDb.DeleteAsync(subjectID);
+                await subjectDb.SaveAsync();
 
                 Console.WriteLine($"Subject {subject.Name} successfuly deleted");
             }
@@ -85,12 +85,12 @@ namespace Task5
             }
         }
 
-        public void UpdateSubject()
+        public async Task UpdateSubject()
         {
             Console.Write("Input subject ID: ");
             var subjectID = Convert.ToInt32(Console.ReadLine());
 
-            var subject = subjectDb.GetItem(subjectID);
+            var subject = await subjectDb.GetItemAsync(subjectID);
             if (subject != null)
             {
                 Console.WriteLine($"ID:\t{subject.Id}\n" +
@@ -105,7 +105,7 @@ namespace Task5
                         subject.Name = subjectName;
 
                         subjectDb.Update(subject);
-                        subjectDb.Save();
+                        await subjectDb.SaveAsync();
 
                         Console.WriteLine($"Subject {subjectName} updated!");
                         break;

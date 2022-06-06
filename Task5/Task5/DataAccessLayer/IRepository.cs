@@ -8,11 +8,11 @@ namespace Task5.DataAccessLayer
 {
     public interface IRepository<T> : IDisposable where T : class
     {
-        IEnumerable<T> GetAll();
-        T? GetItem(int id);
-        void Create(T item);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T?> GetItemAsync(int id);
+        Task CreateAsync(T item);
         void Update(T item);
-        void Delete(int id);
-        void Save();
+        Task DeleteAsync(int id);
+        Task SaveAsync();
     }
 }
