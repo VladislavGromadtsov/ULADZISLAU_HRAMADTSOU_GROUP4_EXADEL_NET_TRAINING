@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Task_management_system.Context;
 using Task_management_system.Models;
+using Task_management_system.Models.Validators;
 
 namespace Task_management_system.Controllers
 {
@@ -50,10 +51,24 @@ namespace Task_management_system.Controllers
                 return BadRequest();
             }
 
-            await _context.AddAsync(task);
-            await _context.SaveChangesAsync();
+            var validator = new TaskValidation();
+            var validationResult = validator.Validate(task);
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    Console.WriteLine($"Property {error.PropertyName} failed validation. Error {error.ErrorCode} {error.ErrorMessage}");
+                }
 
-            return Ok(task);
+                return BadRequest();
+            }
+            else
+            {
+                await _context.AddAsync(task);
+                await _context.SaveChangesAsync();
+
+                return Ok(task);
+            }
         }
 
         [HttpPut]
@@ -69,9 +84,23 @@ namespace Task_management_system.Controllers
                 return NotFound();
             }
 
-            _context.Update(task);
-            await _context.SaveChangesAsync();
-            return Ok(task);
+            var validator = new TaskValidation();
+            var validationResult = validator.Validate(task);
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    Console.WriteLine($"Property {error.PropertyName} failed validation. Error {error.ErrorCode} {error.ErrorMessage}");
+                }
+
+                return BadRequest();
+            }
+            else
+            {
+                _context.Update(task);
+                await _context.SaveChangesAsync();
+                return Ok(task);
+            }
         }
 
         [HttpDelete("{id}")]
