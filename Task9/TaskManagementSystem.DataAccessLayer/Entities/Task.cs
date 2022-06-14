@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task_management_system.Models
+namespace TaskManagementSystem.DataAccessLayer
 {
     [Table("Tasks")]
     public class Task

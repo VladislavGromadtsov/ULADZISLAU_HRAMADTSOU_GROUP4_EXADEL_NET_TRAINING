@@ -1,4 +1,4 @@
-﻿namespace Task_management_system.DataAccessLayer
+﻿namespace TaskManagementSystem.DataAccessLayer
 {
     public interface IRepositoryManager
     {

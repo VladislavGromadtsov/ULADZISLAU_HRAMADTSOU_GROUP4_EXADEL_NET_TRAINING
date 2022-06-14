@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task_management_system.Models
+namespace TaskManagementSystem.DataAccessLayer
 {
     [Table("Users")]
     public class User

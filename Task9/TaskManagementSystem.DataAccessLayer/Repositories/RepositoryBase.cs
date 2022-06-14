@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Task_management_system.Context;
 
-namespace Task_management_system.DataAccessLayer
+namespace TaskManagementSystem.DataAccessLayer
 {
     public class RepositoryBase<T> : IRepository<T> where T : class
     {

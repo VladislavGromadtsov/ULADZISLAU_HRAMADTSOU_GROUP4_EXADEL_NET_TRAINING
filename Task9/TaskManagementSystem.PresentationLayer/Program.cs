@@ -1,9 +1,8 @@
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using NLog;
 using System.Text.Json.Serialization;
-using Task_management_system.Context;
-using Task_management_system.DataAccessLayer;
+using TaskManagementSystem.BusinessLogicLayer;
+using TaskManagementSystem.DataAccessLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationContext>(opt => opt.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 var app = builder.Build();
 

@@ -1,6 +1,6 @@
-﻿using Task_management_system.Context;
+﻿
 
-namespace Task_management_system.DataAccessLayer
+namespace TaskManagementSystem.DataAccessLayer
 {
     public class RepositoryManager : IRepositoryManager
     {
