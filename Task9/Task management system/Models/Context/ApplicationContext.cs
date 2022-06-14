@@ -48,6 +48,17 @@ namespace Task_management_system.Context
                     new User { Id = 4, FullName ="Katya Vasilenko", RoleId=4, Email="Katya@gmail.com", Password ="qwerty123"},
                     new User { Id = 5, FullName ="Vika Viktorieva", RoleId=1, Email="vika@gmail.com", Password ="qwerty111"},
                 });
+
+            modelBuilder.Entity<Models.Task>().HasData(
+                new Models.Task[]
+                {
+                    new Models.Task { Id = 1, Name ="Create", CreatorId=1, PerformerId=2, Description="", Status=Statuses.NotStarted},
+                    new Models.Task { Id = 2, Name ="Push", CreatorId=2, PerformerId=3, Description="", Status=Statuses.NotStarted},
+                    new Models.Task { Id = 3, Name ="Delete", CreatorId=3, PerformerId=4, Description="", Status=Statuses.NotStarted},
+                    new Models.Task { Id = 4, Name ="Read", CreatorId=4, PerformerId=5, Description="", Status=Statuses.NotStarted},
+                    new Models.Task { Id = 5, Name ="Edit", CreatorId=5, PerformerId=1, Description="", Status=Statuses.NotStarted},
+
+                });
         }
     }
 }

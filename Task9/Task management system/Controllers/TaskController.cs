@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Text;
 using Task_management_system.DataAccessLayer;
 
 namespace Task_management_system.Controllers
@@ -51,6 +52,8 @@ namespace Task_management_system.Controllers
             {
                 return BadRequest();
             }
+
+            FillDescription(task);
 
             _repository.Task.CreateTask(task);
             _repository.Save();
@@ -143,6 +146,21 @@ namespace Task_management_system.Controllers
             //    await _context.SaveChangesAsync();
             //    return Ok(task);
             //}
+        }
+
+        private void FillDescription(Models.Task task)
+        {
+            var description = new StringBuilder();
+            if (task.PerformerId != 0)
+            {
+                description.Append($"Creator: {task.Creator.FullName}. Created: {DateTime.Now}. Performer: {task.Performer.FullName}");
+            }
+            else
+            {
+                description.Append($"Creator: {task.Creator.FullName}. Created: {DateTime.Now}. No performer");
+            }
+
+            task.Description = $"{task.Description}{description}";
         }
     }
 }
