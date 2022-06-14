@@ -1,12 +1,14 @@
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using NLog;
+using System.Text.Json.Serialization;
 using Task_management_system.Context;
 using Task_management_system.DataAccessLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers().AddFluentValidation();
+builder.Services.AddControllers().AddFluentValidation().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

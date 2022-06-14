@@ -20,14 +20,14 @@ namespace Task_management_system.Models
 
         [Required]
         public int RoleId { get; set; }
-        public Role Role { get; set; }
+        public virtual Role Role { get; set; }
 
         [Required, MaxLength(100), EmailAddress(ErrorMessage = "The Email is not valid")]
         public string Email { get; set; }
 
         [Required, MaxLength(20)]
         public string Password { get; set; }
-        public List<Task> TasksCreator { get; set; } = new List<Task> { };
-        public List<Task> TasksPerformer { get; set; } = new List<Task> { };
+        public virtual List<Task> TasksCreator { get; set; } = new List<Task> { };
+        public virtual List<Task> TasksPerformer { get; set; } = new List<Task> { };
     }
 }

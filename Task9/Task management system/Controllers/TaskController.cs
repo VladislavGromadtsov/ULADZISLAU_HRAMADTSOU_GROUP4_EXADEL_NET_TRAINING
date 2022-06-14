@@ -18,22 +18,22 @@ namespace Task_management_system.Controllers
         [HttpGet]
         public IActionResult GetTasks()
         {
-            try
-            {
-                var tasks = _repository.Task.GetAllTasks(trackChanges: false);
+            //try
+            //{
+                var tasks = _repository.Task.GetAllTasks();
 
                 return Ok(tasks);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return StatusCode(500, "Internal server error");
+            //}
         }
 
         [HttpGet("{id}")]
         public IActionResult GetTask(int id)
         {
-            var task = _repository.Task.GetTaskById(id, trackChanges: false);
+            var task = _repository.Task.GetTaskById(id);
 
             if (task is null)
             {
@@ -87,7 +87,7 @@ namespace Task_management_system.Controllers
                 return BadRequest();
             }
 
-            if (_repository.Task.GetTaskById(task.Id, trackChanges: false) == null)
+            if (_repository.Task.GetTaskById(task.Id) == null)
             {
                 return NotFound();
             }
@@ -118,7 +118,7 @@ namespace Task_management_system.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteTask(int id)
         {
-            var task = _repository.Task.GetTaskById(id, trackChanges: false);
+            var task = _repository.Task.GetTaskById(id);
             if (task is null)
             {
                 return NotFound();

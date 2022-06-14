@@ -17,6 +17,6 @@ namespace Task_management_system.Models
         [Required, MaxLength(50)]
         public string Name { get; set; }
 
-        public List<User> Users { get; set; } = new List<User>();
+        public virtual List<User> Users { get; set; } = new List<User>();
     }
 }

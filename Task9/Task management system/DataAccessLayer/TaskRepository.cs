@@ -17,11 +17,11 @@ namespace Task_management_system.DataAccessLayer
 
         public void DeleteTask(Models.Task task) => Delete(task);
 
-        public IEnumerable<Models.Task> GetAllTasks(bool trackChanges) => 
-            FindAll(trackChanges).OrderBy(x => x.Id).ToList();
+        public IEnumerable<Models.Task> GetAllTasks() => 
+            FindAll().OrderBy(x => x.Id).ToList();
 
-        public Models.Task GetTaskById(int taskId, bool trackChanges) =>
-            FindByCondition(t => t.Id.Equals(taskId), trackChanges)
+        public Models.Task GetTaskById(int taskId) =>
+            FindByCondition(t => t.Id.Equals(taskId))
             .SingleOrDefault();
 
         public void UpdateTask(Models.Task task) => Update(task);

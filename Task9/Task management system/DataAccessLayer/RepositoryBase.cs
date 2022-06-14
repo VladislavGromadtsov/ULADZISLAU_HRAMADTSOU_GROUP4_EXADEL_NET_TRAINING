@@ -16,12 +16,10 @@ namespace Task_management_system.DataAccessLayer
 
         public void Delete(T entity) => _context.Set<T>().Remove(entity);
 
-        public IQueryable<T> FindAll(bool trackChanges) =>
-            !trackChanges ? _context.Set<T>().AsNoTracking() :
+        public IQueryable<T> FindAll() =>
             _context.Set<T>();
 
-        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges) =>
-            !trackChanges ? _context.Set<T>().Where(expression).AsNoTracking() :
+        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression) =>
             _context.Set<T>().Where(expression);
 
         public void Update(T entity) => _context.Set<T>().Update(entity);

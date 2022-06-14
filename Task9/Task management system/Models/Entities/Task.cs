@@ -25,10 +25,10 @@ namespace Task_management_system.Models
 
         [Required]
         public int CreatorId { get; set; }
-        public User Creator { get; set; }
+        public virtual User Creator { get; set; }
         
         public int PerformerId { get; set; }
-        public User Performer { get; set; }
+        public virtual User Performer { get; set; }
     }
 
     public enum Statuses
