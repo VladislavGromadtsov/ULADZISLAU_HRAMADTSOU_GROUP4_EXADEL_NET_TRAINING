@@ -1,120 +1,148 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Task_management_system.Context;
-using Task_management_system.Models;
-using Task_management_system.Models.Validators;
+using Task_management_system.DataAccessLayer;
 
 namespace Task_management_system.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/tasks")]
     public class TaskController : Controller
     {
-        private readonly ApplicationContext _context;
+        private readonly IRepositoryManager _repository;
 
-        public TaskController(ApplicationContext context)
+        public TaskController(IRepositoryManager repository)
         {
-            _context = context;
+            this._repository = repository;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Models.Task>>> GetTasks()
+        public IActionResult GetTasks()
         {
-            return await _context.Tasks.Include(t => t.Creator).Include(t => t.Performer).ToListAsync();
+            try
+            {
+                var tasks = _repository.Task.GetAllTasks(trackChanges: false);
+
+                return Ok(tasks);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Models.Task>>> GetTask(int? id)
+        public IActionResult GetTask(int id)
         {
-            if (id == null || _context.Tasks == null)
-            {
-                return NotFound();
-            }
+            var task = _repository.Task.GetTaskById(id, trackChanges: false);
 
-            var task = await _context.Tasks
-                .Include(t => t.Creator)
-                .Include(t => t.Performer)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (task == null)
+            if (task is null)
             {
                 return NotFound();
             }
-            return new ObjectResult(task);
+            else
+            {
+                return Ok(task);
+            }
         }
 
         [HttpPost]
-        public async Task<ActionResult<Models.Task>> CreateTask(Models.Task task)
+        public IActionResult CreateTask(Models.Task task)
         {
             if (task is null)
             {
                 return BadRequest();
             }
 
-            var validator = new TaskValidation();
-            var validationResult = validator.Validate(task);
-            if (!validationResult.IsValid)
-            {
-                foreach (var error in validationResult.Errors)
-                {
-                    Console.WriteLine($"Property {error.PropertyName} failed validation. Error {error.ErrorCode} {error.ErrorMessage}");
-                }
+            _repository.Task.CreateTask(task);
+            _repository.Save();
 
-                return BadRequest();
-            }
-            else
-            {
-                await _context.AddAsync(task);
-                await _context.SaveChangesAsync();
+            return Ok(task);
+            //var validator = new TaskValidation();
+            //var validationResult = validator.Validate(task);
+            //if (!validationResult.IsValid)
+            //{
+            //    foreach (var error in validationResult.Errors)
+            //    {
+            //        Console.WriteLine($"Property {error.PropertyName} failed validation. Error {error.ErrorCode} {error.ErrorMessage}");
+            //    }
 
-                return Ok(task);
-            }
+            //    return BadRequest();
+            //}
+            //else
+            //{
+            //    await _context.AddAsync(task);
+            //    await _context.SaveChangesAsync();
+
+            //    return Ok(task);
+            //}
         }
 
         [HttpPut]
-        public async Task<ActionResult<Models.Task>> UpdateTask(Models.Task task)
+        public IActionResult UpdateTask(Models.Task task)
         {
             if (task is null)
             {
                 return BadRequest();
             }
 
-            if (!await _context.Tasks.AnyAsync(t => t.Id == task.Id))
+            if (_repository.Task.GetTaskById(task.Id, trackChanges: false) == null)
             {
                 return NotFound();
             }
 
-            var validator = new TaskValidation();
-            var validationResult = validator.Validate(task);
-            if (!validationResult.IsValid)
-            {
-                foreach (var error in validationResult.Errors)
-                {
-                    Console.WriteLine($"Property {error.PropertyName} failed validation. Error {error.ErrorCode} {error.ErrorMessage}");
-                }
+            _repository.Task.UpdateTask(task);
+            _repository.Save();
+            
+            return Ok(task);
+            //var validator = new TaskValidation();
+            //var validationResult = validator.Validate(task);
+            //if (!validationResult.IsValid)
+            //{
+            //    foreach (var error in validationResult.Errors)
+            //    {
+            //        Console.WriteLine($"Property {error.PropertyName} failed validation. Error {error.ErrorCode} {error.ErrorMessage}");
+            //    }
 
-                return BadRequest();
-            }
-            else
-            {
-                _context.Update(task);
-                await _context.SaveChangesAsync();
-                return Ok(task);
-            }
+            //    return BadRequest();
+            //}
+            //else
+            //{
+            //    _context.Update(task);
+            //    await _context.SaveChangesAsync();
+            //    return Ok(task);
+            //}
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Models.Task>> DeleteTask(int id)
+        public IActionResult DeleteTask(int id)
         {
-            var task = _context.Tasks.FirstOrDefaultAsync(t => t.Id == id);
+            var task = _repository.Task.GetTaskById(id, trackChanges: false);
             if (task is null)
             {
                 return NotFound();
             }
+            
+            _repository.Task.DeleteTask(task);
+            _repository.Save();
 
-            _context.Remove(task);
-            await _context.SaveChangesAsync();
-            return Ok(task);
+            return NoContent();
+
+            //var validator = new TaskValidation();
+            //var validationResult = validator.Validate(task.Result);
+            //if (!validationResult.IsValid)
+            //{
+            //    foreach (var error in validationResult.Errors)
+            //    {
+            //        Console.WriteLine($"Property {error.PropertyName} failed validation. Error {error.ErrorCode} {error.ErrorMessage}");
+            //    }
+
+            //    return BadRequest();
+            //}
+            //else
+            //{
+            //    _context.Remove(task);
+            //    await _context.SaveChangesAsync();
+            //    return Ok(task);
+            //}
         }
     }
 }
