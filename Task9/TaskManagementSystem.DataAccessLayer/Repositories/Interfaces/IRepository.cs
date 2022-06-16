@@ -13,6 +13,6 @@ namespace TaskManagementSystem.DataAccessLayer
         Task<bool> DeleteAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();
         Task<T?> GetByIdAsync(int id);
-        T Update(Task task);
+        T Update(TaskEntity task);
     }
 }

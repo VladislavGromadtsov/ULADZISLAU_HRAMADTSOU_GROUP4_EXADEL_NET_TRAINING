@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using TaskManagementSystem.DataAccessLayer.Enums;
 
-namespace TaskManagementSystem.DataAccessLayer
+namespace TaskManagementSystem.BusinessLogicLayer.Models
 {
-    [Table("Tasks")]
     public class Task
     {
-        [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
         public int Id { get; set; }
 
         [Required, MaxLength(100)]
@@ -23,7 +25,7 @@ namespace TaskManagementSystem.DataAccessLayer
         [Required]
         public int CreatorId { get; set; }
         public virtual User Creator { get; set; }
-        
+
         public int PerformerId { get; set; }
         public virtual User Performer { get; set; }
     }

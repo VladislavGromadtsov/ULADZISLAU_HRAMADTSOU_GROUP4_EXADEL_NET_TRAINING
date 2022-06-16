@@ -2,7 +2,9 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using TaskManagementSystem.BusinessLogicLayer;
+using TaskManagementSystem.BusinessLogicLayer.Mapping;
 using TaskManagementSystem.DataAccessLayer;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,8 @@ builder.Services.AddTransient<ITaskService, TaskService>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>(); 
 builder.Services.AddTransient<ITaskRepository, TaskRepository>();
 builder.Services.AddTransient<IRepositoryManager, RepositoryManager>();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 

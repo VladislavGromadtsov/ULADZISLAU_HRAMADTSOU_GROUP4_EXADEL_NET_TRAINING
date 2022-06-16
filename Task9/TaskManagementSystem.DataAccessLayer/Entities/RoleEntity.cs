@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace TaskManagementSystem.DataAccessLayer
 {
     [Table("Roles")]
-    public class Role
+    public class RoleEntity
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -17,6 +17,6 @@ namespace TaskManagementSystem.DataAccessLayer
         [Required, MaxLength(50)]
         public string Name { get; set; }
 
-        public virtual List<User> Users { get; set; } = new List<User>();
+        public virtual List<UserEntity> Users { get; set; } = new List<UserEntity>();
     }
 }

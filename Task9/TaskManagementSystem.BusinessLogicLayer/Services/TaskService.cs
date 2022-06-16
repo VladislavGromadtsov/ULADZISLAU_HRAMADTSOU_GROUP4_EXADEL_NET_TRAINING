@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using TaskManagementSystem.DataAccessLayer;
+using TaskManagementSystem.BusinessLogicLayer.Models;
 
 namespace TaskManagementSystem.BusinessLogicLayer
 {
@@ -11,7 +11,7 @@ namespace TaskManagementSystem.BusinessLogicLayer
             _taskManager = taskManager;
         }
 
-        public async Task<DataAccessLayer.Task> CreateAsync(DataAccessLayer.Task task)
+        public async Task<Models.Task> CreateAsync(Models.Task task)
         {
             FillDescription(task);
 
@@ -20,11 +20,11 @@ namespace TaskManagementSystem.BusinessLogicLayer
 
         public async Task<bool> DeleteAsync(int id) => await _taskManager.DeleteTaskAsync(id);
 
-        public async Task<DataAccessLayer.Task?> GetTaskByIdAsync(int id) => await _taskManager.GetTaskByIdAsync(id);
-        public async Task<IEnumerable<DataAccessLayer.Task>> GetAllTaskAsync() => await _taskManager.GetAllTasksAsync();
-        public async Task<DataAccessLayer.Task> UpdateAsync(DataAccessLayer.Task task) => await _taskManager.UpdateTaskAsync(task);
+        public async Task<Models.Task?> GetTaskByIdAsync(int id) => await _taskManager.GetTaskByIdAsync(id);
+        public async Task<IEnumerable<Models.Task>> GetAllTaskAsync() => await _taskManager.GetAllTasksAsync();
+        public async Task<Models.Task> UpdateAsync(Models.Task task) => await _taskManager.UpdateTaskAsync(task);
 
-        private void FillDescription(DataAccessLayer.Task task)
+        private void FillDescription(Models.Task task)
         {
             var description = new StringBuilder();
             if (task.PerformerId != 0)

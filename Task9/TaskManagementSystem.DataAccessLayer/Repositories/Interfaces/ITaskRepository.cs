@@ -3,10 +3,10 @@ namespace TaskManagementSystem.DataAccessLayer
 {
     public interface ITaskRepository
     {
-        Task<Task> CreateAsync(Task task);
+        Task<TaskEntity> CreateAsync(TaskEntity task);
         Task<bool> DeleteAsync(int id);
-        Task<IEnumerable<Task>> GetAllAsync();
-        Task<Task?> GetByIdAsync(int id);
-        Task Update(Task task);
+        Task<IEnumerable<TaskEntity>> GetAllAsync();
+        Task<TaskEntity?> GetByIdAsync(int id);
+        TaskEntity Update(TaskEntity task);
     }
 }

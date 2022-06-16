@@ -10,17 +10,17 @@ namespace TaskManagementSystem.DataAccessLayer
             _context = context;
         }
 
-        public async Task<Task?> GetByIdAsync(int id)
+        public async Task<TaskEntity?> GetByIdAsync(int id)
         {
             return await _context.Tasks.FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public async Task<IEnumerable<Task>> GetAllAsync()
+        public async Task<IEnumerable<TaskEntity>> GetAllAsync()
         {
             return await _context.Tasks.ToListAsync();
         }
 
-        public async Task<Task> CreateAsync(Task task)
+        public async Task<TaskEntity> CreateAsync(TaskEntity task)
         {
             var taskEntity = await _context.Tasks.AddAsync(task);
             return taskEntity.Entity;
@@ -39,7 +39,7 @@ namespace TaskManagementSystem.DataAccessLayer
             return false;
         }
 
-        public Task Update(Task task)
+        public TaskEntity Update(TaskEntity task)
         {
             return _context.Tasks.Update(task).Entity;
         }

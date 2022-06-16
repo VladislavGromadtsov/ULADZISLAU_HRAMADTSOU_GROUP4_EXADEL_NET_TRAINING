@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Text;
 using TaskManagementSystem.BusinessLogicLayer;
-using TaskManagementSystem.DataAccessLayer;
 
 namespace TaskManagementSystem.PresentationLayer
 {
@@ -33,7 +31,7 @@ namespace TaskManagementSystem.PresentationLayer
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTask(DataAccessLayer.Task task)
+        public async Task<IActionResult> CreateTask(BusinessLogicLayer.Models.Task task)
         {
             if (task is null)
             {
@@ -46,7 +44,7 @@ namespace TaskManagementSystem.PresentationLayer
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateTask(DataAccessLayer.Task task)
+        public async Task<IActionResult> UpdateTask(BusinessLogicLayer.Models.Task task)
         {
             if (task is null)
             {
