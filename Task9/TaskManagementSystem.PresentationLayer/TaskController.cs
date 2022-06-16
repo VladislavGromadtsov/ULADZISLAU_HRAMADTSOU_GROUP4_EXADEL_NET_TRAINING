@@ -42,7 +42,7 @@ namespace TaskManagementSystem.PresentationLayer
 
             var result = await _taskService.CreateAsync(task);
 
-            return Ok(result);
+            return Ok(result.Id);
         }
 
         [HttpPut]
