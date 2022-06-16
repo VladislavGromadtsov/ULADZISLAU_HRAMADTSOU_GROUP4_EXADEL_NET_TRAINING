@@ -83,9 +83,7 @@ namespace TaskManagementSystem.PresentationLayer
                 return NotFound();
             }
 
-            return NoContent();
+            return Ok();
         }
-
-        
     }
 }
