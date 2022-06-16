@@ -22,7 +22,7 @@ namespace TaskManagementSystem.PresentationLayer
             var tasks = _taskService.GetTasks();
             if (tasks is null)
             {
-                return BadRequest();
+                return NotFound();
             }
             return Ok(tasks);
         }
