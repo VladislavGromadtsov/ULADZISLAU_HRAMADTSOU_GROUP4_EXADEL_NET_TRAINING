@@ -4,56 +4,36 @@ namespace TaskManagementSystem.DataAccessLayer
 {
     public class RepositoryManager : IRepositoryManager
     {
-        private ApplicationContext _context;
-        private ITaskRepository _taskRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        private IUserRepository _userRepository;
-
-        private IRoleRepository _roleRepository;
-
-        public RepositoryManager(ApplicationContext context)
+        public RepositoryManager(IUnitOfWork unitOfWork)
         {
-            this._context = context;
+            _unitOfWork = unitOfWork;
         }
 
-        public ITaskRepository Task
+        public async Task<IEnumerable<Task>> GetAllTasksAsync() => await _unitOfWork.Tasks.GetAllAsync();
+
+        public async Task<Task?> GetTaskByIdAsync(int id) => await _unitOfWork.Tasks.GetByIdAsync(id);
+
+        public async Task<Task> CreateTaskAsync(Task task) => await _unitOfWork.Tasks.CreateAsync(task);
+
+        public async Task<bool> DeleteTaskAsync(int id) => await _unitOfWork.Tasks.DeleteAsync(id);
+
+        public async Task<Task> UpdateTaskAsync(Task task)
         {
-            get
-            {
-                if (_taskRepository is null)
-                {
-                    _taskRepository = new TaskRepository(_context);
-                }
+            var entityFromDb = await _unitOfWork.Tasks.GetByIdAsync(task.Id);
 
-                return _taskRepository;
-            }
+            entityFromDb.Status = task.Status;
+            entityFromDb.Description = task.Description;
+            entityFromDb.Name = task.Name;
+            entityFromDb.Performer = task.Performer;
+            entityFromDb.PerformerId = task.PerformerId;
+            entityFromDb.CreatorId = task.CreatorId;
+            entityFromDb.Creator = task.Creator;
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return entityFromDb;
         }
-
-        public IRoleRepository Role
-        {
-            get
-            {
-                if (_roleRepository is null)
-                {
-                    _roleRepository = new RoleRepository(_context);
-                }
-
-                return _roleRepository;
-            }
-        }
-        public IUserRepository User
-        {
-            get
-            {
-                if (_userRepository is null)
-                {
-                    _userRepository = new UserRepository(_context);
-                }
-
-                return _userRepository;
-            }
-        }
-
-        public void Save() => _context.SaveChanges();
     }
 }

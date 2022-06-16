@@ -13,77 +13,57 @@ namespace TaskManagementSystem.PresentationLayer
 
         public TaskController(ITaskService taskService)
         {
-            this._taskService = taskService;
+            _taskService = taskService;
         }
 
         [HttpGet]
-        public IActionResult GetTasks()
+        public async Task<IActionResult> GetTasks()
         {
-            var tasks = _taskService.GetTasks();
-            if (tasks is null)
-            {
-                return NotFound();
-            }
-            return Ok(tasks);
+            var result = await _taskService.GetAllTaskAsync();
+
+            return result != null ? Ok(result) : NotFound();
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetTask(int id)
+        public async Task<IActionResult> GetTask(int id)
         {
-            var task = _taskService.GetTaskById(id);
+            var result = await _taskService.GetTaskByIdAsync(id);
 
-            if (task is null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return Ok(task);
-            }
+            return result != null ? Ok(result) : NotFound();
         }
 
         [HttpPost]
-        public IActionResult CreateTask(DataAccessLayer.Task task)
+        public async Task<IActionResult> CreateTask(DataAccessLayer.Task task)
         {
             if (task is null)
             {
                 return BadRequest();
             }
 
-            _taskService.Create(task);
+            var result = await _taskService.CreateAsync(task);
 
-            return Ok(task);
+            return Ok(result);
         }
 
         [HttpPut]
-        public IActionResult UpdateTask(DataAccessLayer.Task task)
+        public async Task<IActionResult> UpdateTask(DataAccessLayer.Task task)
         {
             if (task is null)
             {
                 return BadRequest();
             }
 
-            var taskUp = _taskService.Update(task);
+            var result = await _taskService.UpdateAsync(task);
 
-            if (taskUp == null)
-            {
-                return NotFound();
-            }
-            
-            return Ok(task);
+            return result != null ? Ok(result) : NotFound();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteTask(int id)
+        public async Task<IActionResult> DeleteTask(int id)
         {
-            var checkDelete = _taskService.Delete(id);
+            var result = await _taskService.DeleteAsync(id);
 
-            if (!checkDelete)
-            {
-                return NotFound();
-            }
-
-            return Ok();
+            return result ? Ok() : NotFound();
         }
     }
 }

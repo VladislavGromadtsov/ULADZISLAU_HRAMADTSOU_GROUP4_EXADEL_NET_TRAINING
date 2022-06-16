@@ -5,55 +5,24 @@ namespace TaskManagementSystem.BusinessLogicLayer
 {
     public class TaskService : ITaskService
     {
-        private readonly IRepositoryManager _repository;
-        public TaskService(IRepositoryManager repository)
+        private readonly IRepositoryManager _taskManager;
+        public TaskService(IRepositoryManager taskManager)
         {
-            this._repository = repository;
+            _taskManager = taskManager;
         }
 
-        public IEnumerable<DataAccessLayer.Task> GetTasks()
-        {
-            return _repository.Task.GetAllTasks();
-        }
-
-        public DataAccessLayer.Task GetTaskById(int id)
-        {
-            return _repository.Task.GetTaskById(id);
-        }
-
-        public DataAccessLayer.Task Update(DataAccessLayer.Task task)
-        {
-            if (_repository.Task.GetTaskById(task.Id) == null)
-            {
-                return null;
-            }
-
-            _repository.Task.UpdateTask(task);
-            _repository.Save();
-
-            return task;
-        }
-
-        public bool Delete(int id)
-        {
-            var task = _repository.Task.GetTaskById(id);
-            if (task == null) return false;
-
-            _repository.Task.DeleteTask(task);
-            _repository.Save();
-
-            return true;
-        }
-
-        public DataAccessLayer.Task Create(DataAccessLayer.Task task)
+        public async Task<DataAccessLayer.Task> CreateAsync(DataAccessLayer.Task task)
         {
             FillDescription(task);
 
-            _repository.Task.CreateTask(task);
-            _repository.Save();
-
-            return task;
+            return await _taskManager.CreateTaskAsync(task);
         }
+
+        public async Task<bool> DeleteAsync(int id) => await _taskManager.DeleteTaskAsync(id);
+
+        public async Task<DataAccessLayer.Task?> GetTaskByIdAsync(int id) => await _taskManager.GetTaskByIdAsync(id);
+        public async Task<IEnumerable<DataAccessLayer.Task>> GetAllTaskAsync() => await _taskManager.GetAllTasksAsync();
+        public async Task<DataAccessLayer.Task> UpdateAsync(DataAccessLayer.Task task) => await _taskManager.UpdateTaskAsync(task);
 
         private void FillDescription(DataAccessLayer.Task task)
         {

@@ -3,10 +3,10 @@ namespace TaskManagementSystem.BusinessLogicLayer
 {
     public interface ITaskService
     {
-        DataAccessLayer.Task Create(DataAccessLayer.Task task);
-        bool Delete(int id);
-        DataAccessLayer.Task GetTaskById(int id);
-        IEnumerable<DataAccessLayer.Task> GetTasks();
-        DataAccessLayer.Task Update(DataAccessLayer.Task task);
+        Task<DataAccessLayer.Task> CreateAsync(DataAccessLayer.Task task);
+        Task<bool> DeleteAsync(int id);
+        Task<IEnumerable<DataAccessLayer.Task>> GetAllTaskAsync();
+        Task<DataAccessLayer.Task?> GetTaskByIdAsync(int id);
+        Task<DataAccessLayer.Task> UpdateAsync(DataAccessLayer.Task task);
     }
 }

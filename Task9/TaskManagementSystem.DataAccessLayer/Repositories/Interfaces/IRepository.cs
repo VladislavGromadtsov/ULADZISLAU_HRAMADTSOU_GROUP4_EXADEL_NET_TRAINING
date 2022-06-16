@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace TaskManagementSystem.DataAccessLayer
 {
-    public interface IRepository<T>
+    public interface IRepository<T> where T : class
     {
-        IQueryable<T> FindAll();
-        IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
-        void Create(T entity);
-        void Update(T entity);
-        void Delete(T entity);
+        Task<T> CreateAsync(T t);
+        Task<bool> DeleteAsync(int id);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T?> GetByIdAsync(int id);
+        T Update(Task task);
     }
 }

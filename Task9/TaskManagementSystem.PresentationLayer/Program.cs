@@ -12,8 +12,10 @@ builder.Services.AddControllers().AddFluentValidation().AddJsonOptions(x =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationContext>(opt => opt.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("TaskManagementSystem.DataAccessLayer")));
-builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
-builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddTransient<ITaskService, TaskService>();
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>(); 
+builder.Services.AddTransient<ITaskRepository, TaskRepository>();
+builder.Services.AddTransient<IRepositoryManager, RepositoryManager>();
 
 var app = builder.Build();
 
