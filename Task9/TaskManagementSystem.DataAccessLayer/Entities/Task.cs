@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TaskManagementSystem.DataAccessLayer.Enums;
 
 namespace TaskManagementSystem.DataAccessLayer
 {
@@ -29,11 +26,5 @@ namespace TaskManagementSystem.DataAccessLayer
         
         public int PerformerId { get; set; }
         public virtual User Performer { get; set; }
-    }
-
-    public enum Statuses
-    {
-        NotStarted,
-        Completed
     }
 }
