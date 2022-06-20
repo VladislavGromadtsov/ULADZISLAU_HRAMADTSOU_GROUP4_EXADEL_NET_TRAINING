@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TaskManagementSystem.DataAccessLayer.Enums;
 
 namespace TaskManagementSystem.DataAccessLayer
 {
-    public class ApplicationContext : DbContext
+    public class ApplicationContext : IdentityDbContext<UserEntity, RoleEntity, int>
     {
-        public DbSet<UserEntity> Users { get; set; }
-        public DbSet<RoleEntity> Roles { get; set; }
         public DbSet<TaskEntity> Tasks { get; set; }
         public ApplicationContext(DbContextOptions options) : base(options)
         {
@@ -15,6 +15,18 @@ namespace TaskManagementSystem.DataAccessLayer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<UserEntity>(b =>
+            {
+                b.ToTable("Users");
+            });
+
+            modelBuilder.Entity<RoleEntity>(b =>
+            {
+                b.ToTable("Roles");
+            });
+
             modelBuilder.Entity<TaskEntity>()
                 .HasOne(t => t.Creator)
                 .WithMany(u => u.TasksCreator)
@@ -28,24 +40,33 @@ namespace TaskManagementSystem.DataAccessLayer
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
-
             modelBuilder.Entity<RoleEntity>().HasData(
                 new RoleEntity[]
                 {
-                    new RoleEntity { Id = 1, Name = "TeamLead" },
-                    new RoleEntity { Id = 2, Name ="Senior"},
-                    new RoleEntity { Id = 3, Name ="Middle"},
-                    new RoleEntity { Id = 4, Name ="Junior"}
+                    new RoleEntity { Id = 1, Name = "TeamLead", NormalizedName = "TEAMLEAD" },
+                    new RoleEntity { Id = 2, Name ="Senior", NormalizedName = "SENIOR"},
+                    new RoleEntity { Id = 3, Name ="Middle", NormalizedName = "MIDDLE"},
+                    new RoleEntity { Id = 4, Name ="Junior", NormalizedName = "JUNIOR"}
                 });
 
             modelBuilder.Entity<UserEntity>().HasData(
                 new UserEntity[]
                 {
-                    new UserEntity { Id = 1, FullName ="Ivan Ivanov", RoleId=1,Email ="ivan@gmail.com", Password="ivanivan"},
-                    new UserEntity { Id = 2, FullName ="Vasya Vasiliev", RoleId=2, Email="vasya@gmail.com", Password="123"},
-                    new UserEntity { Id = 3, FullName ="Petya Petrov", RoleId=3, Email="petya@gmail.com", Password ="qwerty"},
-                    new UserEntity { Id = 4, FullName ="Katya Vasilenko", RoleId=4, Email="Katya@gmail.com", Password ="qwerty123"},
-                    new UserEntity { Id = 5, FullName ="Vika Viktorieva", RoleId=1, Email="vika@gmail.com", Password ="qwerty111"},
+                    new UserEntity { Id = 1, UserName ="Ivan Ivanov", Email ="ivan@gmail.com", Password="ivanivan"},
+                    new UserEntity { Id = 2, UserName ="Vasya Vasiliev", Email="vasya@gmail.com", Password="123"},
+                    new UserEntity { Id = 3, UserName ="Petya Petrov", Email="petya@gmail.com", Password ="qwerty"},
+                    new UserEntity { Id = 4, UserName ="Katya Vasilenko", Email="Katya@gmail.com", Password ="qwerty123"},
+                    new UserEntity { Id = 5, UserName ="Vika Viktorieva", Email="vika@gmail.com", Password ="qwerty111"},
+                });
+
+            modelBuilder.Entity<IdentityUserRole<int>>().HasData(
+                new IdentityUserRole<int>[]
+                {
+                    new IdentityUserRole<int> {RoleId = 2, UserId = 1},
+                    new IdentityUserRole<int> {RoleId = 3, UserId = 2},
+                    new IdentityUserRole<int> {RoleId = 4, UserId = 3},
+                    new IdentityUserRole<int> {RoleId = 1, UserId = 4},
+                    new IdentityUserRole<int> {RoleId = 2, UserId = 5},
                 });
 
             modelBuilder.Entity<TaskEntity>().HasData(

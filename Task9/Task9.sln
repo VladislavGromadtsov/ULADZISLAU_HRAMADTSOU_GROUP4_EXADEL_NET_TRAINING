@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagementSystem.BusinessLogicLayer", "TaskManagementSystem.BusinessLogicLayer\TaskManagementSystem.BusinessLogicLayer.csproj", "{DB2031AF-78F6-477A-A168-C74BAEEFBAA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagementSystem.BusinessLogicLayer", "TaskManagementSystem.BusinessLogicLayer\TaskManagementSystem.BusinessLogicLayer.csproj", "{DB2031AF-78F6-477A-A168-C74BAEEFBAA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagementSystem.DataAccessLayer", "TaskManagementSystem.DataAccessLayer\TaskManagementSystem.DataAccessLayer.csproj", "{37AC755D-CFF8-4600-B14E-99DED607B542}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagementSystem.DataAccessLayer", "TaskManagementSystem.DataAccessLayer\TaskManagementSystem.DataAccessLayer.csproj", "{37AC755D-CFF8-4600-B14E-99DED607B542}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagementSystem.PresentationLayer", "TaskManagementSystem.PresentationLayer\TaskManagementSystem.PresentationLayer.csproj", "{86F20708-700E-40D9-9E8F-B74F29AAAC6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagementSystem.PresentationLayer", "TaskManagementSystem.PresentationLayer\TaskManagementSystem.PresentationLayer.csproj", "{86F20708-700E-40D9-9E8F-B74F29AAAC6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

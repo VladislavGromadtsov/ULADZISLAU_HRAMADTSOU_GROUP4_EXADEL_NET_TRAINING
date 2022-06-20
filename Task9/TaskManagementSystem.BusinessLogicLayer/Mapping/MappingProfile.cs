@@ -11,6 +11,7 @@ namespace TaskManagementSystem.BusinessLogicLayer.Mapping
             CreateMap<User, UserEntity>().ReverseMap();
             CreateMap<Role, RoleEntity>().ReverseMap();
             CreateMap<Models.Task, TaskEntity>().ReverseMap();
+            CreateMap<UserForRegistration, UserEntity>();
         }
     }
 }

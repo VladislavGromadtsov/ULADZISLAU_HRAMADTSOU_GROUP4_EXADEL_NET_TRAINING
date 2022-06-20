@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskManagementSystem.DataAccessLayer;
 
@@ -11,9 +12,10 @@ using TaskManagementSystem.DataAccessLayer;
 namespace TaskManagementSystem.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220620141102_Add_Roles")]
+    partial class Add_Roles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,33 +106,6 @@ namespace TaskManagementSystem.DataAccessLayer.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 1,
-                            RoleId = 2
-                        },
-                        new
-                        {
-                            UserId = 2,
-                            RoleId = 3
-                        },
-                        new
-                        {
-                            UserId = 3,
-                            RoleId = 4
-                        },
-                        new
-                        {
-                            UserId = 4,
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            UserId = 5,
-                            RoleId = 2
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -186,28 +161,28 @@ namespace TaskManagementSystem.DataAccessLayer.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "6e77333e-010d-4943-aa6c-b82352031611",
+                            ConcurrencyStamp = "cd26f4cb-8926-4398-b5ef-009c622f9a25",
                             Name = "TeamLead",
                             NormalizedName = "TEAMLEAD"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "dad524ff-4d1d-4018-9496-e3156eb4fd48",
+                            ConcurrencyStamp = "792c0253-0767-4cd7-acc5-daff09295771",
                             Name = "Senior",
                             NormalizedName = "SENIOR"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "d686e175-7615-48e4-a4aa-27a776d22dc3",
+                            ConcurrencyStamp = "5d6ee575-30fa-4096-b775-4e56becd31b9",
                             Name = "Middle",
                             NormalizedName = "MIDDLE"
                         },
                         new
                         {
                             Id = 4,
-                            ConcurrencyStamp = "7eb552a8-2ef3-4f47-87c6-1b914736ab9d",
+                            ConcurrencyStamp = "4e2bd1af-0420-450a-9606-3b82cba4f51d",
                             Name = "Junior",
                             NormalizedName = "JUNIOR"
                         });
@@ -247,53 +222,6 @@ namespace TaskManagementSystem.DataAccessLayer.Migrations
                     b.HasIndex("PerformerId");
 
                     b.ToTable("Tasks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatorId = 1,
-                            Description = "",
-                            Name = "Create",
-                            PerformerId = 2,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatorId = 2,
-                            Description = "",
-                            Name = "Push",
-                            PerformerId = 3,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatorId = 3,
-                            Description = "",
-                            Name = "Delete",
-                            PerformerId = 4,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatorId = 4,
-                            Description = "",
-                            Name = "Read",
-                            PerformerId = 5,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatorId = 5,
-                            Description = "",
-                            Name = "Edit",
-                            PerformerId = 1,
-                            Status = 0
-                        });
                 });
 
             modelBuilder.Entity("TaskManagementSystem.DataAccessLayer.UserEntity", b =>
@@ -318,6 +246,11 @@ namespace TaskManagementSystem.DataAccessLayer.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -357,10 +290,8 @@ namespace TaskManagementSystem.DataAccessLayer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("FullName");
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -375,73 +306,6 @@ namespace TaskManagementSystem.DataAccessLayer.Migrations
                     b.HasIndex("RoleEntityId");
 
                     b.ToTable("Users", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "496b8d7f-c6e2-4022-a5fd-26f932f78c4c",
-                            Email = "ivan@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            Password = "ivanivan",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "Ivan Ivanov"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "1d49d2c0-1b00-4b8a-812d-d1811f4b8d93",
-                            Email = "vasya@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            Password = "123",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "Vasya Vasiliev"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "50cf655e-84d5-434e-bd86-1af32704b0b0",
-                            Email = "petya@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            Password = "qwerty",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "Petya Petrov"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "47d72839-9224-4aeb-8325-06c4d0438c2d",
-                            Email = "Katya@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            Password = "qwerty123",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "Katya Vasilenko"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "7345646f-5bb6-4086-8124-398c8db1b79c",
-                            Email = "vika@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            Password = "qwerty111",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "Vika Viktorieva"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
