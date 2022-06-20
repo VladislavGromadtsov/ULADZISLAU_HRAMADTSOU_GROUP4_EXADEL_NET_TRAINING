@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManagementSystem.BusinessLogicLayer.Models;
 
-namespace TaskManagementSystem.BusinessLogicLayer.Authentification
+namespace TaskManagementSystem.IdentityServer.Authentification
 {
     public interface IAuthenticationManager
     {

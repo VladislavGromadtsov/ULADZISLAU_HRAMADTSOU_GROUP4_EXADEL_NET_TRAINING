@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using TaskManagementSystem.BusinessLogicLayer.Authentification;
 using TaskManagementSystem.BusinessLogicLayer.Models;
 using TaskManagementSystem.DataAccessLayer;
+using TaskManagementSystem.IdentityServer.Authentification;
 
-namespace TaskManagementSystem.PresentationLayer
+namespace TaskManagementSystem.IdentityServer
 {
     [Route("api/authentication")]
     [ApiController]

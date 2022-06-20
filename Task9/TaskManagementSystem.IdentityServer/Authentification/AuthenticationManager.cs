@@ -7,7 +7,7 @@ using System.Text;
 using TaskManagementSystem.BusinessLogicLayer.Models;
 using TaskManagementSystem.DataAccessLayer;
 
-namespace TaskManagementSystem.BusinessLogicLayer.Authentification
+namespace TaskManagementSystem.IdentityServer.Authentification
 {
     public class AuthenticationManager : IAuthenticationManager
     {

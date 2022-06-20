@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TaskManagementSystem.BusinessLogicLayer\TaskManagementSystem.BusinessLogicLayer.csproj" />
     <ProjectReference Include="..\TaskManagementSystem.DataAccessLayer\TaskManagementSystem.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\TaskManagementSystem.IdentityServer\TaskManagementSystem.IdentityServer.csproj" />
   </ItemGroup>
 
 </Project>

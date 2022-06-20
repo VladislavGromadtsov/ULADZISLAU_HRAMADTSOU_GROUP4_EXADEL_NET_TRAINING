@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagementSystem.DataAc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagementSystem.PresentationLayer", "TaskManagementSystem.PresentationLayer\TaskManagementSystem.PresentationLayer.csproj", "{86F20708-700E-40D9-9E8F-B74F29AAAC6B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagementSystem.IdentityServer", "TaskManagementSystem.IdentityServer\TaskManagementSystem.IdentityServer.csproj", "{0760E591-EE41-4EF5-86C7-C147FFAEC26B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{86F20708-700E-40D9-9E8F-B74F29AAAC6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86F20708-700E-40D9-9E8F-B74F29AAAC6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86F20708-700E-40D9-9E8F-B74F29AAAC6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0760E591-EE41-4EF5-86C7-C147FFAEC26B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0760E591-EE41-4EF5-86C7-C147FFAEC26B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0760E591-EE41-4EF5-86C7-C147FFAEC26B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0760E591-EE41-4EF5-86C7-C147FFAEC26B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

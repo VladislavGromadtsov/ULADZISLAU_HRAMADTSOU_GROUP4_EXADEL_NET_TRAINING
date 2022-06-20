@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using TaskManagementSystem.BusinessLogicLayer.Authentification;
+using TaskManagementSystem.IdentityServer.Authentification;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
