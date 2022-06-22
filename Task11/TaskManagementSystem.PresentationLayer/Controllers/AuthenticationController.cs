@@ -1,14 +1,16 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagementSystem.BusinessLogicLayer.Models;
 using TaskManagementSystem.DataAccessLayer;
 using TaskManagementSystem.IdentityServer.Authentification;
 
-namespace TaskManagementSystem.IdentityServer
+namespace TaskManagementSystem.PresentationLayer
 {
     [Route("api/authentication")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthenticationController : ControllerBase
     {
         private readonly UserManager<UserEntity> _userManager;
@@ -29,7 +31,7 @@ namespace TaskManagementSystem.IdentityServer
         {
             if (!await _authManager.ValidateUser(user))
             {
-            return Unauthorized();
+                return Unauthorized();
             }
             return Ok(new { Token = await _authManager.CreateToken() });
         }
