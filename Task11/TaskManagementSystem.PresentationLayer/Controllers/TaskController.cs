@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TaskManagementSystem.BusinessLogicLayer;
 
 namespace TaskManagementSystem.PresentationLayer
@@ -15,6 +16,7 @@ namespace TaskManagementSystem.PresentationLayer
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetTasks()
         {
             var result = await _taskService.GetAllTaskAsync();
@@ -23,6 +25,7 @@ namespace TaskManagementSystem.PresentationLayer
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetTask(int id)
         {
             var result = await _taskService.GetTaskByIdAsync(id);
@@ -31,6 +34,7 @@ namespace TaskManagementSystem.PresentationLayer
         }
 
         [HttpPost]
+        [Authorize(Roles = "TeamLead, Senior, Middle")]
         public async Task<IActionResult> CreateTask(BusinessLogicLayer.Models.Task task)
         {
             if (task is null)
@@ -44,6 +48,7 @@ namespace TaskManagementSystem.PresentationLayer
         }
 
         [HttpPut]
+        [Authorize(Roles = "TeamLead, Senior, Middle")]
         public async Task<IActionResult> UpdateTask(BusinessLogicLayer.Models.Task task)
         {
             if (task is null)
@@ -57,6 +62,7 @@ namespace TaskManagementSystem.PresentationLayer
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "TeamLead")]
         public async Task<IActionResult> DeleteTask(int id)
         {
             var result = await _taskService.DeleteAsync(id);

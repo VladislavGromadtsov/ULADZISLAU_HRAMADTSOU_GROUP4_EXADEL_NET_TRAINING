@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -8,22 +7,17 @@ using System.Threading.Tasks;
 
 namespace TaskManagementSystem.DataAccessLayer
 {
-    [Table("Users")]
-    public class UserEntity
+    public class UserEntity : IdentityUser<int>
     {
-        [Key, Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public override int Id { get; set; }
 
         [Required, MaxLength(50)]
-        public string FullName { get; set; }
-
-        [Required]
-        public int RoleId { get; set; }
-        public virtual RoleEntity Role { get; set; }
+        [Column("FullName")]
+        public override string UserName { get; set; }
 
         [Required, MaxLength(100), EmailAddress(ErrorMessage = "The Email is not valid")]
-        public string Email { get; set; }
+        public override string Email { get; set; }
 
         [Required, MaxLength(20)]
         public string Password { get; set; }

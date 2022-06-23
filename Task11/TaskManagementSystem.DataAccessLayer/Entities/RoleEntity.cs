@@ -1,18 +1,15 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TaskManagementSystem.DataAccessLayer
 {
-    [Table("Roles")]
-    public class RoleEntity
+    public class RoleEntity : IdentityRole<int>
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public override int Id { get; set; }
 
         [Required, MaxLength(50)]
         public string Name { get; set; }
