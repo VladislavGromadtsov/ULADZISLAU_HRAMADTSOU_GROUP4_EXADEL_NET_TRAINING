@@ -16,7 +16,7 @@ namespace TaskManagementSystem.PresentationLayer
         }
 
         [HttpGet]
-        [Authorize(Roles = "TeamLead, Senior, Middle, Junior")]
+        [Authorize]
         public async Task<IActionResult> GetTasks()
         {
             var result = await _taskService.GetAllTaskAsync();
@@ -25,7 +25,7 @@ namespace TaskManagementSystem.PresentationLayer
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "TeamLead, Senior, Middle, Junior")]
+        [Authorize]
         public async Task<IActionResult> GetTask(int id)
         {
             var result = await _taskService.GetTaskByIdAsync(id);
