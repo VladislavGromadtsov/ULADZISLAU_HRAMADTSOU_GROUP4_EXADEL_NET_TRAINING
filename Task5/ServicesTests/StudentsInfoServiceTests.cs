@@ -34,8 +34,11 @@ namespace ServicesTests
             using var context = Fixture.CreateContext();
             var studentInfoService = new GetStudentsInfoService(context, infoStringFormatterServices, new SchoolRepository<Student>(context));
 
+            context.Add(new Student() { Id = id, LastName = lastName});
             studentInfoService.SetStrategy(_lastNameService);
             var result = studentInfoService.GetInfoByIdAsync(id).Result;
+
+            context.ChangeTracker.Clear();
 
             Assert.Equal(expected, result);
         }
@@ -43,7 +46,7 @@ namespace ServicesTests
         [Fact]
         public void Get_Test_Student_FullInfo()
         {
-            var id = 6;
+            var id = 5;
             var firstName = "test2";
             var lastName = "test2";
             var phoneNumber = "375293522222";
@@ -55,11 +58,15 @@ namespace ServicesTests
             expected.AppendLine($"PhoneNumber: {phoneNumber}");
             expected.AppendLine($"DateOfBirth: {dateOfBirth.ToString("D")}");
             using var context = Fixture.CreateContext();
+
+            context.Database.BeginTransaction();
             var studentInfoService = new GetStudentsInfoService(context, infoStringFormatterServices, new SchoolRepository<Student>(context));
 
-
+            context.Add(new Student() { Id = id, FirstName = firstName, LastName = lastName, PhoneNumber = phoneNumber, DateOfBirth = dateOfBirth });
             studentInfoService.SetStrategy(_fullInfoService);
             var result = studentInfoService.GetInfoByIdAsync(id).Result;
+
+            context.ChangeTracker.Clear();
 
             Assert.Equal(expected.ToString(), result);
         }

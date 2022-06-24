@@ -8,7 +8,7 @@ namespace Task5.StudentInfoService
         private readonly IEnumerable<IInfoStringFormatterService> _infoStringFormatterServices;
         private IInfoStringFormatterService _currentFormat;
         private readonly ApplicationContext _context;
-        private readonly SchoolRepository<Student> _studentRep;
+        public SchoolRepository<Student> _studentRep { get; }
 
         public GetStudentsInfoService(ApplicationContext applicationContex, IEnumerable<IInfoStringFormatterService> infoStringFormatterServices, SchoolRepository<Student> schoolRepository)
         {
