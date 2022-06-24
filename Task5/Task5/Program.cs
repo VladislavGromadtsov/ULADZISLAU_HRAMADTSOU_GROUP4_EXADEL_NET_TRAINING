@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Task5.Models;
 using Task5.StudentInfoService;
 
@@ -16,12 +18,24 @@ public static class Program
         var connectionString = config.GetConnectionString("DefaultConnection");
 
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
-        var options = optionsBuilder
+        var appContextOptions = optionsBuilder
             .UseLazyLoadingProxies()
             .UseSqlServer(connectionString)
             .Options;
 
-        var taskHelper7 = new TaskHelper7(new ApplicationContext(options));
+        var host = Host.CreateDefaultBuilder()
+            .ConfigureServices(services =>
+            {
+                services.AddDbContext<ApplicationContext>(options =>
+                    options.UseSqlServer(connectionString).UseLazyLoadingProxies());
+                services.AddSingleton<IInfoStringFormatterService, GetFullInfoService>();
+                services.AddSingleton<IInfoStringFormatterService, GetLastNameService>();
+                services.AddTransient<IGetStudentsInfoService, GetStudentsInfoService>();
+                services.AddTransient<ITaskHelper7, TaskHelper7>();
+            })
+            .Build();
+
+        var taskHelper7 = host.Services.GetService<ITaskHelper7>();
 
         while (true)
         {
@@ -49,28 +63,28 @@ public static class Program
                 switch (choice)
                 {
                     case "1":
-                        CreateSubject(options);
+                        CreateSubject(appContextOptions);
                         break;
                     case "2":
-                        UpdateSubject(options);
+                        UpdateSubject(appContextOptions);
                         break;
                     case "3":
-                        DeleteSubject(options);
+                        DeleteSubject(appContextOptions);
                         break;
                     case "4":
-                        ReadSubject(options);
+                        ReadSubject(appContextOptions);
                         break;
                     case "5":
-                        await CreateSubjectAsync(options);
+                        await CreateSubjectAsync(appContextOptions);
                         break;
                     case "6":
-                        await UpdateSubjectAsync(options);
+                        await UpdateSubjectAsync(appContextOptions);
                         break;
                     case "7":
-                        await DeleteSubjectAsync(options);
+                        await DeleteSubjectAsync(appContextOptions);
                         break;
                     case "8":
-                        await ReadSubjectAsync(options);
+                        await ReadSubjectAsync(appContextOptions);
                         break;
                     case "9":
                         await taskHelper7.CreateSubject();
@@ -89,7 +103,7 @@ public static class Program
                         Console.ReadKey();
                         break;
                     case "-s":
-                        GetStudentInfo(options);
+                        GetStudentInfo(appContextOptions, host);
                         Console.ReadKey();
                         break;
                     case "0":
@@ -101,33 +115,36 @@ public static class Program
         }
     }
 
-    public static void GetStudentInfo(DbContextOptions<ApplicationContext> options)
+    public static void GetStudentInfo(DbContextOptions<ApplicationContext> options, IHost host)
     {
-        var getStudentInfoService = new GetStudentsInfoService(new ApplicationContext(options));
-
         Console.Clear();
+
+        var studentInfo = host.Services.GetService<IGetStudentsInfoService>();
+        var formats = studentInfo.GetAllFormats().ToArray();
 
         while (true)
         {
-            Console.WriteLine("1. Press 1 to get full info about student by id\n" +
-                "2. Press 2 to get student's last name by id");
+            for (int i = 0; i < formats.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. Press {i + 1} to get {formats[i].GetDiscription()} by ID");
+            }
 
-            var choice = Console.ReadLine();
-            if (choice == "1" || choice == "2")
+            var choice = Convert.ToInt32(Console.ReadLine());
+            if (choice >= 1 && choice <= formats.Length)
             {
                 Console.Write("Enter the Id: ");
                 var studentId = Convert.ToInt32(Console.ReadLine());
 
-                if (studentId != 0 && choice == "1")
+                if (studentId > 0)
                 {
-                    getStudentInfoService.SetStrategy(new GetFullInfoService());
-                    getStudentInfoService.GetInfoById(studentId);
+                    studentInfo.SetStrategy(formats[choice - 1]);
+                    studentInfo.GetInfoById(studentId);
                 }
-                else if (studentId != 0)
+                else
                 {
-                    getStudentInfoService.SetStrategy(new GetLastNameService());
-                    getStudentInfoService.GetInfoById(studentId);
+                    Console.WriteLine("ID should be more than 0");
                 }
+
                 break;
             }
         }

@@ -5,5 +5,6 @@ namespace Task5.StudentInfoService
     public interface IInfoStringFormatterService
     {
         public string GetInfo(Student student);
+        public string GetDiscription();
     }
 }

@@ -1,34 +1,33 @@
 ﻿namespace Task5.StudentInfoService
 {
-    public class GetStudentsInfoService
+    public class GetStudentsInfoService : IGetStudentsInfoService
     {
-        private IInfoStringFormatterService _infoStringFormatterService;
+        private readonly IEnumerable<IInfoStringFormatterService> _infoStringFormatterServices;
+        private IInfoStringFormatterService _currentFormat;
         private readonly ApplicationContext _context;
 
-        public GetStudentsInfoService(ApplicationContext applicationContex)
+        public GetStudentsInfoService(ApplicationContext applicationContex, IEnumerable<IInfoStringFormatterService> infoStringFormatterServices)
         {
-            _context = applicationContex;
-            _infoStringFormatterService = new GetFullInfoService();
-        }
-        public GetStudentsInfoService(ApplicationContext applicationContex, IInfoStringFormatterService infoStringFormatterService)
-        {
-            this._infoStringFormatterService = infoStringFormatterService;
+            this._infoStringFormatterServices = infoStringFormatterServices;
+            this._currentFormat = infoStringFormatterServices.FirstOrDefault();
             this._context = applicationContex;
         }
 
+        public IEnumerable<IInfoStringFormatterService> GetAllFormats() => _infoStringFormatterServices;
+
         public void SetStrategy(IInfoStringFormatterService infoStringFormatterService)
         {
-            this._infoStringFormatterService = infoStringFormatterService;
+            this._currentFormat = infoStringFormatterService;
         }
 
         public void GetInfoById(int id)
         {
             var result = string.Empty;
-            var student = _context.Students.FirstOrDefault(x => x.Id == id);  
-            
+            var student = _context.Students.FirstOrDefault(x => x.Id == id);
+
             if (student != null)
             {
-                result = this._infoStringFormatterService.GetInfo(student);
+                result = this._currentFormat.GetInfo(student);
 
                 Console.WriteLine(result);
             }
