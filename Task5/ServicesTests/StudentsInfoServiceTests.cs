@@ -34,6 +34,8 @@ namespace ServicesTests
             using var context = Fixture.CreateContext();
             var studentInfoService = new GetStudentsInfoService(context, infoStringFormatterServices, new SchoolRepository<Student>(context));
 
+            context.Database.BeginTransaction();
+
             context.Add(new Student() { Id = id, LastName = lastName});
             studentInfoService.SetStrategy(_lastNameService);
             var result = studentInfoService.GetInfoByIdAsync(id).Result;
@@ -58,9 +60,9 @@ namespace ServicesTests
             expected.AppendLine($"PhoneNumber: {phoneNumber}");
             expected.AppendLine($"DateOfBirth: {dateOfBirth.ToString("D")}");
             using var context = Fixture.CreateContext();
+            var studentInfoService = new GetStudentsInfoService(context, infoStringFormatterServices, new SchoolRepository<Student>(context));
 
             context.Database.BeginTransaction();
-            var studentInfoService = new GetStudentsInfoService(context, infoStringFormatterServices, new SchoolRepository<Student>(context));
 
             context.Add(new Student() { Id = id, FirstName = firstName, LastName = lastName, PhoneNumber = phoneNumber, DateOfBirth = dateOfBirth });
             studentInfoService.SetStrategy(_fullInfoService);
@@ -69,6 +71,34 @@ namespace ServicesTests
             context.ChangeTracker.Clear();
 
             Assert.Equal(expected.ToString(), result);
+        }
+
+        [Fact]
+        public void Get_Not_Existing_Student_LastName_Info()
+        {
+            var id = 1000;
+            var expected = "There are no such student";
+            using var context = Fixture.CreateContext();
+            var studentInfoService = new GetStudentsInfoService(context, infoStringFormatterServices, new SchoolRepository<Student>(context));
+
+            studentInfoService.SetStrategy(_lastNameService);
+            var result = studentInfoService.GetInfoByIdAsync(id).Result;
+
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Get_Not_Existing_Student_Full_Info()
+        {
+            var id = 1000;
+            var expected = "There are no such student";
+            using var context = Fixture.CreateContext();
+            var studentInfoService = new GetStudentsInfoService(context, infoStringFormatterServices, new SchoolRepository<Student>(context));
+
+            studentInfoService.SetStrategy(_fullInfoService);
+            var result = studentInfoService.GetInfoByIdAsync(id).Result;
+
+            Assert.Equal(expected, result);
         }
     }
 }
