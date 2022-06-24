@@ -36,11 +36,11 @@ namespace ServicesTests
                 DateOfBirth = dateOfBirth
             };
             var expected = new StringBuilder();
-            expected.AppendLine($"Id: {student.Id}");
-            expected.AppendLine($"FirstName: {student.FirstName}");
-            expected.AppendLine($"LastName: {student.LastName}");
-            expected.AppendLine($"PhoneNumber: {student.PhoneNumber}");
-            expected.AppendLine($"DateOfBirth: {student.DateOfBirth.ToString("D")}");
+            expected.AppendLine($"Id: {id}");
+            expected.AppendLine($"FirstName: {firstName}");
+            expected.AppendLine($"LastName: {lastName}");
+            expected.AppendLine($"PhoneNumber: {phoneNumber}");
+            expected.AppendLine($"DateOfBirth: {dateOfBirth.ToString("D")}");
 
             var result = fullInfoService.GetInfo(student);
 
@@ -68,11 +68,11 @@ namespace ServicesTests
                 DateOfBirth = dateOfBirth
             };
             var expected = new StringBuilder();
-            expected.AppendLine($"Id: {student.Id}");
-            expected.AppendLine($"FirstName: {student.FirstName}");
-            expected.AppendLine($"LastName: {student.LastName}");
-            expected.AppendLine($"PhoneNumber: {student.PhoneNumber}");
-            expected.AppendLine($"DateOfBirth: {student.DateOfBirth.ToString("D")}");
+            expected.AppendLine($"Id: {id}");
+            expected.AppendLine($"FirstName: {firstName}");
+            expected.AppendLine($"LastName: {lastName}");
+            expected.AppendLine($"PhoneNumber: {phoneNumber}");
+            expected.AppendLine($"DateOfBirth: {dateOfBirth.ToString("D")}");
 
             var result = fullInfoService.GetInfo(student);
 
@@ -100,11 +100,11 @@ namespace ServicesTests
                 DateOfBirth = dateOfBirth
             };
             var expected = new StringBuilder();
-            expected.AppendLine($"Id: {student.Id}");
-            expected.AppendLine($"FirstName: {student.FirstName}");
-            expected.AppendLine($"LastName: {student.LastName}");
-            expected.AppendLine($"PhoneNumber: {student.PhoneNumber}");
-            expected.AppendLine($"DateOfBirth: {student.DateOfBirth.ToString("D")}");
+            expected.AppendLine($"Id: {id}");
+            expected.AppendLine($"FirstName: {firstName}");
+            expected.AppendLine($"LastName: {lastName}");
+            expected.AppendLine($"PhoneNumber: {phoneNumber}");
+            expected.AppendLine($"DateOfBirth: {dateOfBirth.ToString("D")}");
 
             var result = fullInfoService.GetInfo(student);
 

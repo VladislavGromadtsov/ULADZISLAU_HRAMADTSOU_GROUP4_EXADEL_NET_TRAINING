@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Task5.DataAccessLayer;
 using Task5.Models;
@@ -24,7 +26,7 @@ namespace ServicesTests
         } 
 
         [Fact]
-        public void Get_Test_Student()
+        public void Get_Test_Student_LastNames()
         {
             var id = 5;
             var lastName = "test1";
@@ -36,6 +38,30 @@ namespace ServicesTests
             var result = studentInfoService.GetInfoByIdAsync(id).Result;
 
             Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Get_Test_Student_FullInfo()
+        {
+            var id = 6;
+            var firstName = "test2";
+            var lastName = "test2";
+            var phoneNumber = "375293522222";
+            var dateOfBirth = DateTime.Now;
+            var expected = new StringBuilder();
+            expected.AppendLine($"Id: {id}");
+            expected.AppendLine($"FirstName: {firstName}");
+            expected.AppendLine($"LastName: {lastName}");
+            expected.AppendLine($"PhoneNumber: {phoneNumber}");
+            expected.AppendLine($"DateOfBirth: {dateOfBirth.ToString("D")}");
+            using var context = Fixture.CreateContext();
+            var studentInfoService = new GetStudentsInfoService(context, infoStringFormatterServices, new SchoolRepository<Student>(context));
+
+
+            studentInfoService.SetStrategy(_fullInfoService);
+            var result = studentInfoService.GetInfoByIdAsync(id).Result;
+
+            Assert.Equal(expected.ToString(), result);
         }
     }
 }

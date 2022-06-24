@@ -23,9 +23,9 @@ namespace ServicesTests
                         context.Database.EnsureCreated();
 
                         context.AddRange(
-                            new Student { FirstName = "test1", LastName = "test1", PhoneNumber = "375293522222", Address = "test1", ClassId = 1 },
-                            new Student { FirstName = "test2", LastName = "test2", PhoneNumber = "375293522222", Address = "test2", ClassId = 2 },
-                            new Student { FirstName = "test3", LastName = "test3", PhoneNumber = "375293522222", Address = "test3", ClassId = 3 }
+                            new Student { FirstName = "test1", LastName = "test1", PhoneNumber = "375293522222", Address = "test1", ClassId = 1, DateOfBirth = System.DateTime.Now },
+                            new Student { FirstName = "test2", LastName = "test2", PhoneNumber = "375293522222", Address = "test2", ClassId = 2, DateOfBirth = System.DateTime.Now },
+                            new Student { FirstName = "test3", LastName = "test3", PhoneNumber = "375293522222", Address = "test3", ClassId = 3, DateOfBirth = System.DateTime.Now }
                         );
                         context.SaveChanges();
                     }
