@@ -12,8 +12,22 @@ namespace Task5.StudentInfoService
 
         public string GetInfo(Student student)
         {
-            var info = new StringBuilder();
+            if (student is null)
+            {
+                throw new ArgumentNullException(nameof(student));
+            }
 
+            if (student.LastName is null || student.FirstName is null || student.PhoneNumber is null)
+            {
+                throw new ArgumentNullException(nameof(student), "Check info. It should be not null");
+            }
+
+            if (string.IsNullOrEmpty(student.LastName) || string.IsNullOrEmpty(student.FirstName) || string.IsNullOrEmpty(student.PhoneNumber))
+            {
+                throw new ArgumentException("Info should be not empty", nameof(student));
+            }
+
+            var info = new StringBuilder();
             info.AppendLine($"Id: {student.Id}");
             info.AppendLine($"FirstName: {student.FirstName}");
             info.AppendLine($"LastName: {student.LastName}");

@@ -1,4 +1,6 @@
 ﻿
+using Task5.Models;
+
 namespace Task5
 {
     public interface ITaskHelper7
