@@ -43,6 +43,15 @@ public class ProductService : IProductService
         return product;
     }
 
+    public Product UpdateProductName(Product product)
+    {
+        var filter = Builders<Product>.Filter.Eq("_id", product.Id);
+        var update = Builders<Product>.Update.Set("name", product.Name).Inc("AuditInfo.Version", 1);
+        _products.UpdateOne(filter, update);
+
+        return GetProduct(product.Id);
+    }
+
     public List<BsonDocument> GetProductsShortInfo()
     {
         var projection = Builders<Product>.Projection.Include("name");
@@ -67,4 +76,5 @@ public class ProductService : IProductService
         _products.InsertMany(products);
         return products;
     }
+
 }

@@ -70,4 +70,10 @@ public class ProductController : ControllerBase
     {
         return Ok(_productService.UpdateProduct(product));
     }
+
+    [HttpPut("UpdateProductName")]
+    public IActionResult UpdateProductName(Product product)
+    {
+        return Ok(_productService.UpdateProductName(product));
+    }
 }
