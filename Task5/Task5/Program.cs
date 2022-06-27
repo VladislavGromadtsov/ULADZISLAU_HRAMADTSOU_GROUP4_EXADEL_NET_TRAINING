@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Task5.DataAccessLayer;
 using Task5.Models;
 using Task5.StudentInfoService;
 
@@ -32,6 +33,7 @@ public static class Program
                 services.AddSingleton<IInfoStringFormatterService, GetLastNameService>();
                 services.AddTransient<IGetStudentsInfoService, GetStudentsInfoService>();
                 services.AddTransient<ITaskHelper7, TaskHelper7>();
+                services.AddTransient<SchoolRepository<Student>>();
             })
             .Build();
 
