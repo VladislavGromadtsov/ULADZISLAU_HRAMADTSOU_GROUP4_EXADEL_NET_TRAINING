@@ -76,4 +76,11 @@ public class ProductController : ControllerBase
     {
         return Ok(_productService.UpdateProductName(product));
     }
+
+    [HttpDelete("DeleteProductsWithEmptyFeatures")]
+    public IActionResult DeleteProductsWithEmptyFeatures()
+    {
+        _productService.DeleteProductsWithEmptyFeatures();
+        return Ok();
+    }
 }

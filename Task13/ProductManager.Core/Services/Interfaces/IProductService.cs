@@ -14,4 +14,5 @@ public interface IProductService
     List<Product> GetUpdatedProducts();
     List<Product> AddProducts(List<Product> products);
     Product UpdateProductName(Product product);
+    void DeleteProductsWithEmptyFeatures();
 }
