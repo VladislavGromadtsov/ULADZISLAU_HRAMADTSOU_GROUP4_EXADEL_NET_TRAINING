@@ -44,6 +44,13 @@ public class ProductController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost("AddProducts")]
+    public IActionResult AddProducts(List<Product> products)
+    {
+        var result = _productService.AddProducts(products);
+        return Ok(result);
+    }
+
     [HttpPost]
     public IActionResult AddProduct(Product product)
     {

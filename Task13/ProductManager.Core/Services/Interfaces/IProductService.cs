@@ -12,4 +12,5 @@ public interface IProductService
     Product UpdateProduct(Product product);
     List<BsonDocument> GetProductsShortInfo();
     List<Product> GetUpdatedProducts();
+    List<Product> AddProducts(List<Product> products);
 }

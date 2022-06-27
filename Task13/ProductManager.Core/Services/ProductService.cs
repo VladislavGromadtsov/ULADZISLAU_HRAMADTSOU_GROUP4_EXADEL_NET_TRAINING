@@ -56,4 +56,15 @@ public class ProductService : IProductService
         var result = _products.Find(filter).SortBy(p => p.AuditInfo.Version).ToList();
         return result;
     }
+
+    public List<Product> AddProducts(List<Product> products)
+    {
+        foreach (var product in products)
+        {
+            product.AuditInfo.CreatedOn = DateTime.UtcNow;
+        }
+
+        _products.InsertMany(products);
+        return products;
+    }
 }
