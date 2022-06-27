@@ -80,7 +80,8 @@ public class ProductService : IProductService
     public void DeleteProductsWithEmptyFeatures()
     {
         var builder = Builders<Product>.Filter;
-        var filter = builder.And(builder.Size("Features", 0), builder.Type("Features", BsonType.Null));
-        _products.DeleteMany(filter);
+        var filter = builder.Or(builder.Size("Features", 0), builder.Exists("Features", false));
+
+        var result = _products.DeleteMany(filter);
     }
 }
