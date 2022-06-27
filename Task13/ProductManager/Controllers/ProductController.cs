@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProductManager.Core.Models;
-using ProductManager.Core.Services.Interfaces;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
+using ProductManager.Core.Repositories.Interfaces;
 
 namespace ProductManager.Controllers;
 
@@ -10,9 +9,9 @@ namespace ProductManager.Controllers;
 [Route("[controller]")]
 public class ProductController : ControllerBase
 {
-    private readonly IProductService _productService;
+    private readonly IProductRepository _productService;
 
-    public ProductController(IProductService productService)
+    public ProductController(IProductRepository productService)
     { 
         _productService = productService;
     }

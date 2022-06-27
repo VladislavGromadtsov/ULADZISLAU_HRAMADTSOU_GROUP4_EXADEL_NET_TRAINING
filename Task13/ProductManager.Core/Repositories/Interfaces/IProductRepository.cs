@@ -1,9 +1,9 @@
 ﻿using MongoDB.Bson;
 using ProductManager.Core.Models;
 
-namespace ProductManager.Core.Services.Interfaces;
+namespace ProductManager.Core.Repositories.Interfaces;
 
-public interface IProductService
+public interface IProductRepository
 {
     List<Product> GetProducts();
     Product AddProduct(Product product);

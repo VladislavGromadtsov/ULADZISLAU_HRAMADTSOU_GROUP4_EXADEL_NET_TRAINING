@@ -1,8 +1,8 @@
 using ProductManager.Core.Client;
 using ProductManager.Core.Client.Interfaces;
 using ProductManager.Core.Configurations;
-using ProductManager.Core.Services;
-using ProductManager.Core.Services.Interfaces;
+using ProductManager.Core.Repositories;
+using ProductManager.Core.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IDbClient, DbClient>();
 builder.Services.Configure<ProductManagerDbConfig>(builder.Configuration);
-builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
 
