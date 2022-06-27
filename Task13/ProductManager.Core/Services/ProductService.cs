@@ -49,4 +49,11 @@ public class ProductService : IProductService
         var result = _products.Find(product => true).Project(projection).ToList();
         return result;
     }
+
+    public List<Product> GetUpdatedProducts()
+    {
+        var filter = Builders<Product>.Filter.Gt("AuditInfo.Version", 1);
+        var result = _products.Find(filter).SortBy(p => p.AuditInfo.Version).ToList();
+        return result;
+    }
 }

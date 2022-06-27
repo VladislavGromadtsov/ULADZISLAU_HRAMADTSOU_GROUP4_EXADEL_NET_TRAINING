@@ -11,4 +11,5 @@ public interface IProductService
     void DeleteProduct(Guid id);
     Product UpdateProduct(Product product);
     List<BsonDocument> GetProductsShortInfo();
+    List<Product> GetUpdatedProducts();
 }

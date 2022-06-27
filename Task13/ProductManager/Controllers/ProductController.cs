@@ -17,18 +17,25 @@ public class ProductController : ControllerBase
         _productService = productService;
     }
 
-    [HttpGet(Name ="GetProductsShortInfo")]
+    [HttpGet("GetProductsShortInfo")]
     public IActionResult GetProductsShortInfo()
     {
         var result = _productService.GetProductsShortInfo().ConvertAll(BsonTypeMapper.MapToDotNetValue);
         return Ok(result);
     }
 
-    //[HttpGet]
-    //public IActionResult GetAllProductsShortInfo()
-    //{
-    //    return Ok(_productService.GetProducts());
-    //}
+    [HttpGet("GetUpdatedProducts")]
+    public IActionResult GetUpdatedProducts()
+    {
+        var result = _productService.GetUpdatedProducts();
+        return Ok(result);
+    }
+
+    [HttpGet("All")]
+    public IActionResult GetAllProducts()
+    {
+        return Ok(_productService.GetProducts());
+    }
 
     [HttpGet("{id}", Name ="GetProduct")]
     public IActionResult GetProduct(Guid id)
