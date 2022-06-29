@@ -37,10 +37,13 @@ public class ProductRepository : IProductRepository
 
     public Product UpdateProduct(Product product)
     {
-        var version = GetProduct(product.Id).AuditInfo.Version;
-        product.AuditInfo.Version = version + 1;
-        _products.ReplaceOne(p => p.Id == product.Id, product);
-        return product;
+        var filter = Builders<Product>.Filter.Eq("_id", product.Id);
+        var update = Builders<Product>.Update.Set("name", product.Name)
+            .Set("Features", product.Features).Inc("AuditInfo.Version", 1);
+        var opt = new FindOneAndUpdateOptions<Product> { ReturnDocument = ReturnDocument.After };
+        var result = _products.FindOneAndUpdate(filter, update, opt);
+
+        return result;
     }
 
     public Product UpdateProductName(Product product)
