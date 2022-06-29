@@ -47,9 +47,10 @@ public class ProductRepository : IProductRepository
     {
         var filter = Builders<Product>.Filter.Eq("_id", product.Id);
         var update = Builders<Product>.Update.Set("name", product.Name).Inc("AuditInfo.Version", 1);
-        _products.UpdateOne(filter, update);
+        var opt = new FindOneAndUpdateOptions<Product> { ReturnDocument = ReturnDocument.After };
+        var result = _products.FindOneAndUpdate(filter, update, opt);
 
-        return GetProduct(product.Id);
+        return result;
     }
 
     public List<Product> GetProductsShortInfo()
