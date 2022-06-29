@@ -10,7 +10,7 @@ public interface IProductRepository
     Product GetProduct(Guid id);
     void DeleteProduct(Guid id);
     Product UpdateProduct(Product product);
-    List<BsonDocument> GetProductsShortInfo();
+    List<Product> GetProductsShortInfo();
     List<Product> GetUpdatedProducts();
     List<Product> AddProducts(List<Product> products);
     Product UpdateProductName(Product product);

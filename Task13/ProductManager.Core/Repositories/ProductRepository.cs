@@ -52,10 +52,10 @@ public class ProductRepository : IProductRepository
         return GetProduct(product.Id);
     }
 
-    public List<BsonDocument> GetProductsShortInfo()
+    public List<Product> GetProductsShortInfo()
     {
-        var projection = Builders<Product>.Projection.Include("name");
-        var result = _products.Find(product => true).Project(projection).ToList();
+        var projection = Builders<Product>.Projection.Include(x=> x.Name);
+        var result = _products.Find(product => true).Project<Product>(projection).ToList();
         return result;
     }
 

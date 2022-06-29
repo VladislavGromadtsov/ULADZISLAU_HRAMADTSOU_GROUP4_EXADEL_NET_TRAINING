@@ -19,7 +19,7 @@ public class ProductController : ControllerBase
     [HttpGet("GetProductsShortInfo")]
     public IActionResult GetProductsShortInfo()
     {
-        var result = _productService.GetProductsShortInfo().ConvertAll(BsonTypeMapper.MapToDotNetValue);
+        var result = _productService.GetProductsShortInfo();
         return Ok(result);
     }
 
