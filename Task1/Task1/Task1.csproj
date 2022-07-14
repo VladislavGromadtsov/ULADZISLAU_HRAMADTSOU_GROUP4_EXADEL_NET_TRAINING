@@ -5,6 +5,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <RepositoryUrl>https://github.com/VladislavGromadtsov/ULADZISLAU_HRAMADTSOU_GROUP4_EXADEL_NET_TRAINING</RepositoryUrl>
   </PropertyGroup>
+	
+  <ItemGroup>
+	  <PackageReference Include="VG.Test.IdentityServer" Version="1.3.0" />
+  </ItemGroup>
 
 </Project>

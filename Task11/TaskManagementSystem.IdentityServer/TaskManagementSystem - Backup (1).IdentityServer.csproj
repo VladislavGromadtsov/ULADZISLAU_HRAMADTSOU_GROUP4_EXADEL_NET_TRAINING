@@ -7,22 +7,17 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>VG.Test.IdentityServer</PackageId>
 	<BuildCommand>$(BuildCommand) -IncludeReferencedProjects</BuildCommand>
-	<Version>1.3.0</Version>
-	<RepositoryUrl>https://github.com/VladislavGromadtsov/ULADZISLAU_HRAMADTSOU_GROUP4_EXADEL_NET_TRAINING</RepositoryUrl>
+	<Version>1.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.21.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-	  <ProjectReference Include="..\TaskManagementSystem.BusinessLogicLayer\TaskManagementSystem.BusinessLogicLayer.csproj">
+		<ProjectReference Include="..\TaskManagementSystem.BusinessLogicLayer\TaskManagementSystem.BusinessLogicLayer.csproj">
 		  <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-		  <IncludeAssets>BusinessLogicLayer.dll</IncludeAssets>
+		  <IncludeAssets>TaskManagementSystem.BusinessLogicLayer.dll</IncludeAssets>
 	  </ProjectReference>
 	  <ProjectReference Include="..\TaskManagementSystem.DataAccessLayer\TaskManagementSystem.DataAccessLayer.csproj">
 		  <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-		  <IncludeAssets>DataAccessLayer.dll</IncludeAssets>
+		<IncludeAssets>TaskManagementSystem.DataAccessLayer.dll</IncludeAssets>
 	  </ProjectReference>
   </ItemGroup>
 
