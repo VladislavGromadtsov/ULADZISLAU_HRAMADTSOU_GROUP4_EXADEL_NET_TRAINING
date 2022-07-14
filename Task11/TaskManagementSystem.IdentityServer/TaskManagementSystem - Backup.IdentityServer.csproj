@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>VG.Test.IdentityServer</PackageId>
+	<BuildCommand>$(BuildCommand) -IncludeReferencedProjects</BuildCommand>
+	<Version>1.1.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TaskManagementSystem.BusinessLogicLayer\TaskManagementSystem.BusinessLogicLayer.csproj" />
+    <ProjectReference Include="..\TaskManagementSystem.DataAccessLayer\TaskManagementSystem.DataAccessLayer.csproj" />
+  </ItemGroup>
+
+</Project>
